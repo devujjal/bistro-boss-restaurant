@@ -44,7 +44,30 @@ const Header = () => {
                 </div>
 
 
-               
+                <div className={`absolute ${toggle ? 'block' : 'hidden'} bg-black w-4/5 h-screen px-5 py-4 overflow-auto top-0 left-0`}>
+                    <div className="relative font-cinzel text-[#FFFFFF] ">
+                        <span className="text-2xl font-bold">BISTRO BOSS</span><br />
+                        <span className="tracking-veryTighter">Restaurant</span>
+
+                        <button 
+                        onClick={() => setToggle(false)}
+                        className="absolute top-[-10px] right-0"><IoIosCloseCircleOutline size={30} color="#FFFFFF" /> </button>
+
+                    </div>
+                    <div className="font-inter font-semibold uppercase pl-3 mt-10">
+                        <nav className="text-white flex flex-col text-sm gap-4">
+                            <NavLink to={""}>Home</NavLink>
+                            <NavLink to={""}>Contact Us</NavLink>
+                            <NavLink to={""}>Deshboard</NavLink>
+                            <NavLink to={""}>Our Menu</NavLink>
+                            <NavLink to={""}>Our Shop</NavLink>
+                            {/* <Link className="w-12"><img src="https://i.ibb.co.com/Wpm30Qk/151-1511569-cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png" className="w-full" alt="" /></Link> */}
+                        </nav>
+                        <div className="mt-8">
+                            <button><RxAvatar color="#FFFFFF" size={35} /></button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
     );
