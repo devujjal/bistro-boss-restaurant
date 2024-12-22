@@ -9,7 +9,11 @@ export default {
     fontFamily: {
       "cinzel": ['"Cinzel", serif'],
       "inter": ['"Inter", serif']
+    },
+    letterSpacing: {
+      veryTighter: '0.45rem'
     }
+
   },
   plugins: [],
 }
