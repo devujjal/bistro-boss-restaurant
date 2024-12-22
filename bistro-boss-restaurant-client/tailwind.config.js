@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      "cinzel": ['"Cinzel", serif'],
+      "inter": ['"Inter", serif']
+    }
   },
   plugins: [],
 }
