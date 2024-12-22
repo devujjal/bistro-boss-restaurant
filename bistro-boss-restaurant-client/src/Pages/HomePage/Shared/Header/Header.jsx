@@ -11,8 +11,9 @@ const Header = () => {
 
     return (
         <header>
+
             <div className="bg-black relative">
-                <div className="container mx-auto px-3">
+                <div className="w-full fixed z-[1] bg-opacity-60 mx-auto bg-[#1B1B1D] px-4 md:px-14">
                     <div className="flex items-center py-4">
                         <div className="font-cinzel text-[#FFFFFF] w-2/4">
                             <span className="md:text-2xl font-bold">BISTRO BOSS</span><br />
@@ -44,14 +45,14 @@ const Header = () => {
                 </div>
 
 
-                <div className={`absolute ${toggle ? 'block' : 'hidden'} bg-black w-4/5 h-screen px-5 py-4 overflow-auto top-0 left-0`}>
+                <div className={`absolute ${toggle ? 'block' : 'hidden'} bg-black w-4/5 z-[1] h-screen px-5 py-4 overflow-auto top-0 left-0 z-10`}>
                     <div className="relative font-cinzel text-[#FFFFFF] ">
                         <span className="text-2xl font-bold">BISTRO BOSS</span><br />
                         <span className="tracking-veryTighter">Restaurant</span>
 
-                        <button 
-                        onClick={() => setToggle(false)}
-                        className="absolute top-[-10px] right-0"><IoIosCloseCircleOutline size={30} color="#FFFFFF" /> </button>
+                        <button
+                            onClick={() => setToggle(false)}
+                            className="absolute top-[-10px] right-0"><IoIosCloseCircleOutline size={30} color="#FFFFFF" /> </button>
 
                     </div>
                     <div className="font-inter font-semibold uppercase pl-3 mt-10">
@@ -69,6 +70,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+
         </header>
     );
 };

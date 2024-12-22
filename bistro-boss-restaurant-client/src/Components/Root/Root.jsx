@@ -6,11 +6,10 @@ const Root = () => {
     return (
         <div>
             <Header />
-            <div className="h-screen">
+            <div>
                 <Outlet />
             </div>
             <Footer />
-
         </div>
     );
 };
