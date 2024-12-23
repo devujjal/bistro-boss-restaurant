@@ -5,27 +5,15 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './FoodSlider.css';
+import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
 
 const FoodSlider = () => {
     return (
         <section className='py-10'>
             <div className='container mx-auto'>
                 <div className='px-6 py-3 md:px-24'>
-                    <div className='text-center font-inter mb-8'>
-                        <span className='text-[#D99904] mb-2 block'>---From 11:00am to 10:00pm---</span>
-                        <div className="relative py-5 md:py-7">
-                            <h3 className="relative z-10 text-center text-[#151515] text-2xl font-medium">ORDER ONLINE</h3>
+                    <SectionTitle subHeading={'From 11:00am to 10:00pm'} heading={'ORDER ONLINE'}/>
 
-                            <div
-                                className="absolute w-[300px] h-[3px] bg-[#E8E8E8] left-[50%] transform -translate-x-1/2 top-[5px] md:top-[12px] md:w-[250px]">
-                            </div>
-
-                            <div
-                                className="absolute w-[300px] h-[3px] bg-[#E8E8E8] left-[50%] transform -translate-x-1/2 top-[65px] sm:w-[200px] md:top-[70px] md:w-[250px]">
-                            </div>
-                        </div>
-
-                    </div>
                     <div>
                         <Swiper
                             slidesPerView={4}
