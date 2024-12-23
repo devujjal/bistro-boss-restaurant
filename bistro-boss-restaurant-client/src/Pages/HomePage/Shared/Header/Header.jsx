@@ -13,7 +13,7 @@ const Header = () => {
         <header>
 
             <div className="bg-black relative">
-                <div className="w-full fixed z-[1] bg-opacity-60 mx-auto bg-[#1B1B1D] px-4 md:px-14">
+                <div className="w-full fixed z-10 bg-opacity-60 mx-auto bg-[#1B1B1D] px-4 md:px-14">
                     <div className="flex items-center py-4">
                         <div className="font-cinzel text-[#FFFFFF] w-2/4">
                             <span className="md:text-2xl font-bold">BISTRO BOSS</span><br />
