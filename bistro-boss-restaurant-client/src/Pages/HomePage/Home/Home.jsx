@@ -1,6 +1,7 @@
 import Banner from "../Banner/Banner";
 import BistroBoss from "../BistroBoss/BistroBoss";
 import FoodSlider from "../FoodSlider/FoodSlider";
+import OurMenu from "../OurMenu/OurMenu";
 
 const Home = () => {
     return (
@@ -8,6 +9,7 @@ const Home = () => {
             <Banner />
             <FoodSlider />
             <BistroBoss />
+            <OurMenu />
         </>
     );
 };
