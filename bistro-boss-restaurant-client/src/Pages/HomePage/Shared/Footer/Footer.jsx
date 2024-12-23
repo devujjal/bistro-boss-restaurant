@@ -19,7 +19,7 @@ const Footer = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="bg-[#111827] flex justify-center items-center md:pl-32">
+                <div className="bg-[#111827] flex justify-start items-center md:pl-32">
                     <div className="text-center py-14 font-inter">
                         <h4 className="text-xl">Follow US</h4>
                         <p className="mt-3 text-sm"><span >Join us on social media</span></p>
