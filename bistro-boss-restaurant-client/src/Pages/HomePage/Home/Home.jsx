@@ -5,6 +5,7 @@ import FoodSlider from "../FoodSlider/FoodSlider";
 import OurMenu from "../OurMenu/OurMenu";
 import ParallexSection from "../ParallexSection/ParallexSection";
 import Recommends from "../Recommends/Recommends";
+import Testimonial from "../Testimonial/Testimonial";
 
 const Home = () => {
     return (
@@ -16,7 +17,7 @@ const Home = () => {
             <ContactNumber />
             <Recommends />
             <ParallexSection />
-
+            <Testimonial />
         </>
     );
 };

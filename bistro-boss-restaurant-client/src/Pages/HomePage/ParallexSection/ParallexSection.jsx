@@ -4,7 +4,7 @@ import './ParallexSection.css';
 
 const ParallexSection = () => {
     return (
-        <section>
+        <section className='mb-20'>
             <div>
                 <div className="mains-container">
                     <div className='bg-opacity-60 bg-[#1B1B1D]'>
