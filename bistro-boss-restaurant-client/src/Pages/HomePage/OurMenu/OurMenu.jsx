@@ -15,7 +15,7 @@ const OurMenu = () => {
     }, [])
 
     return (
-        <section className="pb-10">
+        <section className="mb-10">
             <div className="container mx-auto">
                 <div className="px-6 py-3 md:px-24">
                     <SectionTitle heading={'FROM OUR MENU'} subHeading={'Check it out'} />
