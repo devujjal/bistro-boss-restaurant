@@ -24,6 +24,9 @@ const OurMenu = () => {
                             menus.map(menuItem => <BistroMenu key={menuItem._id} item={menuItem} />)
                         }
                     </div>
+                    <div className="text-center mt-8">
+                        <button className="text-[#1F2937] font-inter text-base md:text-xl py-3 px-4 border-b-2 rounded-b-md border-[#1F2937]">View All Menu</button>
+                    </div>
                 </div>
             </div>
         </section>
