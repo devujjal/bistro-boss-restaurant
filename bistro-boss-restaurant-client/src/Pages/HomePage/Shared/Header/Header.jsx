@@ -25,7 +25,7 @@ const Header = () => {
                                     <NavLink to={""}>Home</NavLink>
                                     <NavLink to={""}>Contact Us</NavLink>
                                     <NavLink to={""}>Deshboard</NavLink>
-                                    <NavLink to={""}>Our Menu</NavLink>
+                                    <NavLink to={"/our-menu"}>Our Menu</NavLink>
                                     <NavLink to={""}>Our Shop</NavLink>
                                     <Link className="w-12 block"><img src="https://i.ibb.co.com/Wpm30Qk/151-1511569-cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png" className="w-full" alt="" /></Link>
                                 </nav>
@@ -56,10 +56,10 @@ const Header = () => {
                     </div>
                     <div className="font-inter font-semibold uppercase pl-3 mt-10">
                         <nav className="text-white flex flex-col text-sm gap-4">
-                            <NavLink to={""}>Home</NavLink>
+                            <NavLink to={"/"}>Home</NavLink>
                             <NavLink to={""}>Contact Us</NavLink>
                             <NavLink to={""}>Deshboard</NavLink>
-                            <NavLink to={""}>Our Menu</NavLink>
+                            <NavLink to={"/our-menu"}>Our Menu</NavLink>
                             <NavLink to={""}>Our Shop</NavLink>
                             {/* <Link className="w-12"><img src="https://i.ibb.co.com/Wpm30Qk/151-1511569-cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png" className="w-full" alt="" /></Link> */}
                         </nav>
