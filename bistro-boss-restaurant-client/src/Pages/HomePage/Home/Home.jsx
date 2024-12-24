@@ -3,6 +3,7 @@ import BistroBoss from "../BistroBoss/BistroBoss";
 import ContactNumber from "../ContactNumber/ContactNumber";
 import FoodSlider from "../FoodSlider/FoodSlider";
 import OurMenu from "../OurMenu/OurMenu";
+import ParallexSection from "../ParallexSection/ParallexSection";
 import Recommends from "../Recommends/Recommends";
 
 const Home = () => {
@@ -14,6 +15,8 @@ const Home = () => {
             <OurMenu />
             <ContactNumber />
             <Recommends />
+            <ParallexSection />
+
         </>
     );
 };

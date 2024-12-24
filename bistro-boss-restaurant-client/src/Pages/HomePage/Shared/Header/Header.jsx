@@ -24,7 +24,6 @@ const Header = () => {
                                 <nav className="text-white flex items-center text-sm gap-3">
                                     <NavLink to={""}>Home</NavLink>
                                     <NavLink to={""}>Contact Us</NavLink>
-                                    <NavLink to={""}></NavLink>
                                     <NavLink to={""}>Deshboard</NavLink>
                                     <NavLink to={""}>Our Menu</NavLink>
                                     <NavLink to={""}>Our Shop</NavLink>

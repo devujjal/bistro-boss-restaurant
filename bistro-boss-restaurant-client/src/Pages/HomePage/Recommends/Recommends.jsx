@@ -18,7 +18,7 @@ const Recommends = () => {
 
 
     return (
-        <section>
+        <section className="mb-10">
             <div className="container mx-auto">
                 <div className="px-6 py-3 md:px-24">
                     <SectionTitle heading={'CHEF RECOMMENDS'} subHeading={'Should Try'} />
