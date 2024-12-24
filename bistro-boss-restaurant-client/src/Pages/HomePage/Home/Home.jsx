@@ -3,6 +3,7 @@ import BistroBoss from "../BistroBoss/BistroBoss";
 import ContactNumber from "../ContactNumber/ContactNumber";
 import FoodSlider from "../FoodSlider/FoodSlider";
 import OurMenu from "../OurMenu/OurMenu";
+import Recommends from "../Recommends/Recommends";
 
 const Home = () => {
     return (
@@ -12,6 +13,7 @@ const Home = () => {
             <BistroBoss />
             <OurMenu />
             <ContactNumber />
+            <Recommends />
         </>
     );
 };
