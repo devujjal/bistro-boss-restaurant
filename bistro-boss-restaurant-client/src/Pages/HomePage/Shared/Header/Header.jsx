@@ -72,7 +72,7 @@ const Header = () => {
                 </div>
 
 
-                <div className={`absolute ${toggle ? 'block' : 'hidden'} bg-black w-4/5 z-[1] h-screen px-5 py-4 overflow-auto top-0 left-0 z-10`}>
+                <div className={`absolute ${toggle ? 'block' : 'hidden'} bg-black w-4/5 z-[1] h-screen px-5 py-4 overflow-auto top-0 left-0 z-50`}>
                     <div className="relative font-cinzel text-[#FFFFFF] ">
                         <span className="text-2xl font-bold">BISTRO BOSS</span><br />
                         <span className="tracking-veryTighter">Restaurant</span>
