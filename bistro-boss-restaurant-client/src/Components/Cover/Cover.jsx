@@ -1,7 +1,7 @@
 import { Parallax } from 'react-parallax';
 import PropTypes from 'prop-types';
 
-const Cover = ({ img }) => {
+const Cover = ({ img, heading, des }) => {
     return (
         <Parallax
             blur={{ min: -15, max: 15 }}
@@ -10,9 +10,9 @@ const Cover = ({ img }) => {
             strength={-200}
         >
             <div className='h-[400px] md:h-[550px] text-center py-36 px-10 md:py-44 md:px-44'>
-                <div className='text-white bg-[#15151599] py-10 px-3 md:py-28 md:px-16'>
-                    <h2 className='text-4xl md:text-6xl font-semibold font-cinzel mb-5'>OUR MENU</h2>
-                    <p className='uppercase font-cinzel text-sm'><span>Would you Like to try a dish?</span></p>
+                <div className='text-white bg-[#15151599] py-10 px-3 md:py-24 md:px-16'>
+                    <h2 className='text-4xl md:text-6xl font-semibold font-cinzel mb-5'>{heading}</h2>
+                    <p className='uppercase font-cinzel text-sm'><span>{des}</span></p>
                 </div>
             </div>
         </Parallax>
@@ -20,7 +20,9 @@ const Cover = ({ img }) => {
 };
 
 Cover.propTypes = {
-    img: PropTypes.string
+    img: PropTypes.string,
+    heading: PropTypes.string,
+    des: PropTypes.string
 }
 
 export default Cover;
