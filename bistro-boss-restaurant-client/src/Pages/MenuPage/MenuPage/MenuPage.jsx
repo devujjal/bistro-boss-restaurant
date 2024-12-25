@@ -92,6 +92,25 @@ const MenuPage = () => {
                     </div>
                 </div>
             </section>
+
+            <section className='mb-20'>
+                <div>
+                    <Cover
+                        img={'https://i.ibb.co.com/HF9BwgN/soup-bg.jpg'}
+                        heading={'SOUPS'}
+                        des={'Soups are the perfect comfort food, warm and full of flavor. Whether you prefer creamy textures or hearty broths, our soups are made fresh with quality ingredients to satisfy and soothe. Enjoy a bowl that feels like a warm hug in every sip!'}
+                        style={true}
+                    />
+                </div>
+            </section>
+
+            <section className='mb-10'>
+                <div className='container mx-auto'>
+                    <div className='px-6 py-3 md:px-24'>
+                        <Offer categoryName={'soup'} />
+                    </div>
+                </div>
+            </section>
         </>
     );
 };
