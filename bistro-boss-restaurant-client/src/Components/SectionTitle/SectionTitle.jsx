@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 
 const SectionTitle = ({ heading, subHeading, text }) => {
     return (
-        <div className='text-center font-inter mb-8'>
+        <div className='text-center font-inter mb-8 z-0'>
             <span className='text-[#D99904] mb-2 block'>---{subHeading}---</span>
-            <div className="relative py-5 md:py-7">
+            <div className="relative py-5 md:py-7 z-0">
                 <h3 className={`${text === true ? 'text-white' : ''} relative z-10 text-center text-[#151515] text-2xl md:text-3xl font-medium`}>{heading}</h3>
 
                 <div

@@ -1,9 +1,8 @@
 import PropTypes from "prop-types";
-import SectionTitle from "../../../../Components/SectionTitle/SectionTitle";
 import useMenuDatas from "../../../../Hooks/useMenuDatas";
 import BistroMenu from "../../../HomePage/Shared/BistroMenu/BistroMenu";
 
-const Offer = ({ categoryName, heading, subHeading }) => {
+const Offer = ({ categoryName }) => {
 
     const { datas } = useMenuDatas();
     const popularItems = datas.filter(data => data.category === categoryName);
@@ -12,20 +11,22 @@ const Offer = ({ categoryName, heading, subHeading }) => {
 
     return (
         <>
-            <SectionTitle heading={heading} subHeading={subHeading} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
                 {
-                    popularItems?.map(menuItem => <BistroMenu key={menuItem._id} item={menuItem} />)
+                    popularItems?.slice(0, 6).map(menuItem => <BistroMenu key={menuItem._id} item={menuItem} />)
                 }
+
+                
             </div>
+            <div className="text-center mt-8">
+                    <button className="text-[#1F2937] font-inter text-base md:text-lg py-3 px-4 border-b-2 rounded-b-md border-[#1F2937]">ORDER YOUR FAVOURITE FOOD</button>
+                </div>
         </>
     );
 };
 
 Offer.propTypes = {
-    categoryName: PropTypes.string,
-    heading: PropTypes.string,
-    subHeading: PropTypes.string
+    categoryName: PropTypes.string
 }
 
 export default Offer;
