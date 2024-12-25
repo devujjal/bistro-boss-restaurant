@@ -22,11 +22,39 @@ const Header = () => {
                         <div className="flex w-2/4 justify-between items-center font-inter font-semibold uppercase">
                             <div className="hidden md:block">
                                 <nav className="text-white flex items-center text-sm gap-3">
-                                    <NavLink to={""}>Home</NavLink>
-                                    <NavLink to={""}>Contact Us</NavLink>
-                                    <NavLink to={""}>Deshboard</NavLink>
-                                    <NavLink to={"/our-menu"}>Our Menu</NavLink>
-                                    <NavLink to={""}>Our Shop</NavLink>
+                                    <NavLink
+                                        to={"/"}
+                                        className={({ isActive }) =>
+                                            isActive ? "text-[#EEFF25]" : "text-white"
+                                        }>Home</NavLink>
+
+                                    <NavLink
+                                        to={'contact-us'}
+                                        className={({ isActive }) =>
+                                            isActive ? "text-[#EEFF25]" : "text-white"
+                                        }>Contact Us</NavLink>
+
+                                    <NavLink
+                                        to={'desboard'}
+                                        className={({ isActive }) =>
+                                            isActive ? "text-[#EEFF25]" : "text-white"
+                                        }
+                                    >Deshboard</NavLink>
+
+                                    <NavLink
+                                        to={"/our-menu"}
+                                        className={({ isActive }) =>
+                                            isActive ? "text-[#EEFF25]" : "text-white"
+                                        }
+                                    >Our Menu</NavLink>
+
+                                    <NavLink
+                                        to={'our-shop'}
+                                        className={({ isActive }) =>
+                                            isActive ? "text-[#EEFF25]" : "text-white"
+                                        }
+                                    >Our Shop</NavLink>
+
                                     <Link className="w-12 block"><img src="https://i.ibb.co.com/Wpm30Qk/151-1511569-cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png" className="w-full" alt="" /></Link>
                                 </nav>
                             </div>
@@ -55,14 +83,45 @@ const Header = () => {
 
                     </div>
                     <div className="font-inter font-semibold uppercase pl-3 mt-10">
+
                         <nav className="text-white flex flex-col text-sm gap-4">
-                            <NavLink to={"/"}>Home</NavLink>
-                            <NavLink to={""}>Contact Us</NavLink>
-                            <NavLink to={""}>Deshboard</NavLink>
-                            <NavLink to={"/our-menu"}>Our Menu</NavLink>
-                            <NavLink to={""}>Our Shop</NavLink>
+                            <NavLink
+                                to={"/"}
+                                className={({ isActive }) =>
+                                    isActive ? "text-[#EEFF25]" : "text-white"
+                                }>Home</NavLink>
+
+                            <NavLink
+                                to={'contact-us'}
+                                className={({ isActive }) =>
+                                    isActive ? "text-[#EEFF25]" : "text-white"
+                                }>Contact Us</NavLink>
+
+                            <NavLink
+                                to={'desboard'}
+                                className={({ isActive }) =>
+                                    isActive ? "text-[#EEFF25]" : "text-white"
+                                }
+                            >Deshboard</NavLink>
+
+                            <NavLink
+                                to={"/our-menu"}
+                                className={({ isActive }) =>
+                                    isActive ? "text-[#EEFF25]" : "text-white"
+                                }
+                            >Our Menu</NavLink>
+
+                            <NavLink
+                                to={'our-shop'}
+                                className={({ isActive }) =>
+                                    isActive ? "text-[#EEFF25]" : "text-white"
+                                }
+                            >Our Shop</NavLink>
+
                             {/* <Link className="w-12"><img src="https://i.ibb.co.com/Wpm30Qk/151-1511569-cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png" className="w-full" alt="" /></Link> */}
                         </nav>
+
+
                         <div className="mt-8">
                             <button><RxAvatar color="#FFFFFF" size={35} /></button>
                         </div>

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
 const BistroMenu = ({item}) => {
-    console.log(item)
 const {name, image, recipe, price} = item;
+
     return (
         <div className='flex space-x-4'>
             <div>

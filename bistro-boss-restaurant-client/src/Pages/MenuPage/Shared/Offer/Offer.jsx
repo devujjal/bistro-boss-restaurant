@@ -7,8 +7,6 @@ const Offer = ({ categoryName }) => {
     const { datas } = useMenuDatas();
     const popularItems = datas.filter(data => data.category === categoryName);
 
-    console.log(popularItems)
-
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
