@@ -32,31 +32,41 @@ async function run() {
         const menus = database.collection('menu');
 
         app.get('/menu', async (req, res) => {
-            console.log(req.query)
-            
-            const page = parseInt(req.query?.page);
-            const size = parseInt(req.query?.size);
+            const page = parseInt(req.query?.page) || 0;
+            const size = parseInt(req.query?.size) || 6;
 
             let query = {};
             if (req.query.category) {
-                query = { category: req.query.category }
+                query = { category: req.query.category };
             }
 
-            const cursor = menus.find(query).skip(page * size).limit(size);
-            const result = await cursor.toArray();
-            res.send(result);
-        })
+            try {
+                const cursor = menus.find(query).skip(page * size).limit(size);
+                const result = await cursor.toArray();
+                res.send(result);
+            } catch (error) {
+                console.error('Error fetching menu:', error);
+                res.status(500).send({ error: 'Failed to fetch menu' });
+            }
+        });
 
 
+        //Total Menu Items Counts
         app.get('/menu-counts', async (req, res) => {
             let query = {};
             if (req.query.category) {
-                query = { category: req.query.category }
+                query = { category: req.query.category };
             }
 
-            const result = await menus.countDocuments(query);
-            res.send({ result })
-        })
+            try {
+                const result = await menus.countDocuments(query);
+                res.send({ result });
+            } catch (error) {
+                console.error('Error fetching menu counts:', error);
+                res.status(500).send({ error: 'Failed to fetch menu counts' });
+            }
+        });
+
 
 
         // Send a ping to confirm a successful connection

@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import Cover from "../../Components/Cover/Cover";
 // import useMenuDatas from "../../Hooks/useMenuDatas";
 // import TabContentCard from "../../Components/TabContentCard/TabContentCard";
-import SaladPaginnation from "../../Components/SaladPaginnation/SaladPaginnation";
+import SaladPaginnation from "../../Components/SaladPagination/SaladPagination";
 
 const ShopPage = () => {
 
