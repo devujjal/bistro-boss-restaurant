@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 
-const SaladCard = ({ salad }) => {
+const SaladCard = ({ item }) => {
 
-    const { name, image, recipe } = salad;
+    const { name, image, recipe } = item;
+
     return (
         <div
             className="bg-[#F3F3F3] w-full font-inter max-w-sm overflow-hidden mx-auto mt-4">
@@ -23,7 +24,7 @@ const SaladCard = ({ salad }) => {
 };
 
 SaladCard.propTypes = {
-    salad: PropTypes.object
+    item: PropTypes.object
 }
 
 export default SaladCard;

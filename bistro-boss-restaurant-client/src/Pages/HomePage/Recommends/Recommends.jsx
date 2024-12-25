@@ -24,7 +24,7 @@ const Recommends = () => {
                     <SectionTitle heading={'CHEF RECOMMENDS'} subHeading={'Should Try'} />
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         {
-                            salads.slice(0, 3).map((salad) => <SaladCard key={salad._id} salad={salad} />)
+                            salads.slice(0, 3).map((salad) => <SaladCard key={salad._id} item={salad} />)
                         }
                     </div>
                 </div>
