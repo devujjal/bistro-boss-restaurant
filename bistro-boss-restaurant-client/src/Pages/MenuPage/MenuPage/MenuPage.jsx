@@ -54,6 +54,25 @@ const MenuPage = () => {
                     </div>
                 </div>
             </section>
+
+            <section className='mb-20'>
+                <div>
+                    <Cover
+                        img={'https://i.ibb.co.com/ZL8P5b4/pizza-bg.jpg'}
+                        heading={'PIZZA'}
+                        des={'Pizza is the ultimate comfort food, loaded with delicious toppings, gooey cheese, and a perfectly baked crust. Whether you love classic flavors or bold, creative combinations, our pizzas are made fresh to bring joy to every bite. Share it with friends or enjoy it all to yourself!'}
+                        style={true}
+                    />
+                </div>
+            </section>
+
+            <section className='mb-20'>
+                <div className='container mx-auto'>
+                    <div className='px-6 py-3 md:px-24'>
+                        <Offer categoryName={'pizza'} />
+                    </div>
+                </div>
+            </section>
         </>
     );
 };
