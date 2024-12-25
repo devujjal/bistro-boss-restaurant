@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import Cover from '../../../Components/Cover/Cover';
 
 
 const MenuPage = () => {
@@ -11,10 +12,8 @@ const MenuPage = () => {
             </Helmet>
 
             <section>
-                <div className="container mx-auto">
-                    <div className="px-6 py-32 md:px-24">
-                        <h1>hello WOrd</h1>
-                    </div>
+                <div>
+                    <Cover img={'https://i.ibb.co.com/6t3JBX3/banner3.jpg'}/>
                 </div>
             </section>
         </>
