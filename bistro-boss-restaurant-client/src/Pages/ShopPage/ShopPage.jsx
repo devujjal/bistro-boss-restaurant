@@ -1,21 +1,18 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Cover from "../../Components/Cover/Cover";
-import SaladCard from "../../Components/SaladCard/SaladCard";
 import useMenuDatas from "../../Hooks/useMenuDatas";
-import Loader from "../../Components/Loader/Loader";
+import TabContentCard from "../../Components/TabContentCard/TabContentCard";
 
 const ShopPage = () => {
 
-    const { datas, loading } = useMenuDatas();
+    const { datas,  } = useMenuDatas();
     const [activeTab, setActiveTab] = useState('Salad'); // Tracks the active tab
     const salads = datas.filter(salad => salad.category === 'salad');
     const pizzas = datas.filter(pizza => pizza.category === 'pizza');
     const soups = datas.filter(soup => soup.category === 'soup');
     const desserts = datas.filter(dessert => dessert.category === 'dessert');
     const drinks = datas.filter(drink => drink.category === 'drinks');
-
-    const counts = Array(6).fill(null);
 
 
     return (
@@ -95,59 +92,23 @@ const ShopPage = () => {
                             {/* Tab Content */}
                             <div className="mt-8">
                                 {activeTab === 'Salad' && (
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                                        {
-                                            loading ? (
-                                                counts.map((unUsed, index) => <Loader key={index} />)
-                                            ) : (
-                                                salads?.map(salad => <SaladCard key={salad._id} item={salad} />)
-                                            )
-                                        }
-                                    </div>
+                                   
+                                    <TabContentCard items={salads} />
                                 )}
                                 {activeTab === 'Pizza' && (
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                                        {
-                                            loading ? (
-                                                counts.map((unUsed, index) => <Loader key={index} />)
-                                            ) : (
-                                                pizzas?.map(pizza => <SaladCard key={pizza._id} item={pizza} />)
-                                            )
-                                        }
-                                    </div>
+
+                                   <TabContentCard items={pizzas}/>
+
                                 )}
                                 {activeTab === 'Soups' && (
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                                        {
-                                            loading ? (
-                                                counts.map((unUsed, index) => <Loader key={index} />)
-                                            ) : (
-                                                soups?.map(soup => <SaladCard key={soup._id} item={soup} />)
-                                            )
-                                        }
-                                    </div>
+                                    
+                                    <TabContentCard items={soups}/>
                                 )}
                                 {activeTab === 'Desserts' && (
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                                        {
-                                            loading ? (
-                                                counts.map((unUsed, index) => <Loader key={index} />)
-                                            ) : (
-                                                desserts?.map(dessert => <SaladCard key={dessert._id} item={dessert} />)
-                                            )
-                                        }
-                                    </div>
+                                    <TabContentCard items={desserts}/>
                                 )}
                                 {activeTab === 'Drinks' && (
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                                        {
-                                            loading ? (
-                                                counts.map((unUsed, index) => <Loader key={index} />)
-                                            ) : (
-                                                drinks?.map(drink => <SaladCard key={drink._id} item={drink} />)
-                                            )
-                                        }
-                                    </div>
+                                    <TabContentCard items={drinks}/>
                                 )}
                             </div>
                         </div>
