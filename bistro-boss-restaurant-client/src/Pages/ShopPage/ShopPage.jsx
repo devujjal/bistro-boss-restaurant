@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Cover from "../../Components/Cover/Cover";
-import useMenuDatas from "../../Hooks/useMenuDatas";
-import TabContentCard from "../../Components/TabContentCard/TabContentCard";
+// import useMenuDatas from "../../Hooks/useMenuDatas";
+// import TabContentCard from "../../Components/TabContentCard/TabContentCard";
+import SaladPaginnation from "../../Components/SaladPaginnation/SaladPaginnation";
 
 const ShopPage = () => {
 
-    const { datas,  } = useMenuDatas();
+    // const { datas,  } = useMenuDatas();
     const [activeTab, setActiveTab] = useState('Salad'); // Tracks the active tab
-    const salads = datas.filter(salad => salad.category === 'salad');
-    const pizzas = datas.filter(pizza => pizza.category === 'pizza');
-    const soups = datas.filter(soup => soup.category === 'soup');
-    const desserts = datas.filter(dessert => dessert.category === 'dessert');
-    const drinks = datas.filter(drink => drink.category === 'drinks');
+    // const salads = datas.filter(salad => salad.category === 'salad');
+    // const pizzas = datas.filter(pizza => pizza.category === 'pizza');
+    // const soups = datas.filter(soup => soup.category === 'soup');
+    // const desserts = datas.filter(dessert => dessert.category === 'dessert');
+    // const drinks = datas.filter(drink => drink.category === 'drinks');
 
+    
 
     return (
         <>
@@ -93,22 +95,32 @@ const ShopPage = () => {
                             <div className="mt-8">
                                 {activeTab === 'Salad' && (
                                    
-                                    <TabContentCard items={salads} />
+                                    // <TabContentCard items={salads} />
+                                    <SaladPaginnation itemName={'salad'} />
+                                  
                                 )}
                                 {activeTab === 'Pizza' && (
 
-                                   <TabContentCard items={pizzas}/>
+                                //    <TabContentCard items={pizzas}/>
+                                <SaladPaginnation itemName={'pizza'} />
+
 
                                 )}
                                 {activeTab === 'Soups' && (
                                     
-                                    <TabContentCard items={soups}/>
+                                    // <TabContentCard items={soups}/>
+                                    <SaladPaginnation itemName={'soup'} />
+
                                 )}
                                 {activeTab === 'Desserts' && (
-                                    <TabContentCard items={desserts}/>
+                                    // <TabContentCard items={desserts}/>
+                                    <SaladPaginnation itemName={'dessert'} />
+
                                 )}
                                 {activeTab === 'Drinks' && (
-                                    <TabContentCard items={drinks}/>
+                                    // <TabContentCard items={drinks}/>
+                                    <SaladPaginnation itemName={'drinks'} />
+
                                 )}
                             </div>
                         </div>
