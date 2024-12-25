@@ -73,6 +73,25 @@ const MenuPage = () => {
                     </div>
                 </div>
             </section>
+
+            <section className='mb-20'>
+                <div>
+                    <Cover
+                        img={'https://i.ibb.co.com/KFMp6Sn/salad-bg.jpg'}
+                        heading={'SALADS'}
+                        des={'Salads are a refreshing and healthy choice, packed with crisp greens, vibrant vegetables, and flavorful dressings. Whether you’re looking for a light meal or a tasty side, our salads are freshly prepared to delight your taste buds and nourish your body'}
+                        style={true}
+                    />
+                </div>
+            </section>
+
+            <section className='mb-20'>
+                <div className='container mx-auto'>
+                    <div className='px-6 py-3 md:px-24'>
+                        <Offer categoryName={'salad'} />
+                    </div>
+                </div>
+            </section>
         </>
     );
 };
