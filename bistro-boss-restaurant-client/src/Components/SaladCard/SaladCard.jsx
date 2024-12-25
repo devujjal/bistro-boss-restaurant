@@ -10,9 +10,9 @@ const SaladCard = ({ item }) => {
             <div className="min-h-[245px]">
                 <img src={image} className="w-full" />
             </div>
-            <div className="p-6 text-center">
+            <div className="flex flex-col justify-between items-center h-60 p-6 text-center">
                 <h3 className="text-xl font-bold">{name}</h3>
-                <p className="mt-3 text-sm text-gray-500 leading-relaxed pb-6">{recipe}</p>
+                <p className="mt-3 text-sm text-gray-500 leading-relaxed pb-6 grow">{recipe}</p>
                 <button
                     type="button"
                     className="px-5 py-2 uppercase bg-[#E8E8E8] text-base text-[#BB8506] border-[#BB8506] border-b-2 rounded-md transition hover:border-b-0 hover:bg-[#1F2937]">
