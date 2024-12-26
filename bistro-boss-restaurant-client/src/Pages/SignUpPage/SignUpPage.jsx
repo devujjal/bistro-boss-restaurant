@@ -7,10 +7,29 @@ import toast from "react-hot-toast";
 const SignUpPage = () => {
 
     const { createNewUser } = useContext(AuthContext);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{}|;:,.<>?]).{6,20}$/;
 
-    const onSubmit = data => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+
+    const onSubmit = async (data) => {
         console.log(data)
+        try {
+            const userCredential = await createNewUser(data?.email, data?.password)
+            if (userCredential.user) {
+                toast.success('Successfully created')
+                reset();
+            }
+
+
+        } catch (error) {
+            if (error.code === "auth/email-already-in-use") {
+                toast.error("Email already in use.");
+            } else {
+                toast.error("Something went wrong");
+            }
+        }
     };
 
 
@@ -65,14 +84,18 @@ const SignUpPage = () => {
                                     </div>
                                     <div>
                                         <label htmlFor="email" className="block text-gray-600 mb-2">Email</label>
-                                        <input type="email" {...register("email", { required: true })} id="email" name="email" placeholder="Enter your email" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                                        {errors.email && <span className="text-red-500">Email is required</span>}
+                                        <input type="email" {...register("email", { required: true, pattern: emailRegex })} id="email" name="email" placeholder="Enter your email" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                        {errors.email?.type === 'pattern' && <p className="text-red-500">Please type a valid Email</p>}
                                     </div>
 
                                     <div>
                                         <label htmlFor="password" className="block text-gray-600 mb-2">Password</label>
-                                        <input type="password" {...register("password", { required: true, minLength: 6, maxLength: 20 })} id="password" name="password" placeholder="Enter your password" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                                        {errors.password && <span className="text-red-500">Password is more then 6 character</span>}
+                                        <input type="password" {...register("password", { required: true, minLength: 6, maxLength: 20, pattern: passwordRegex })} id="password" name="password" placeholder="Enter your password" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+
+                                        {errors.password?.type === 'password' && <p className="text-red-500">Password is Required</p>}
+                                        {errors.password?.type === 'minLength' && <p className="text-red-500">Password must be 6 characters</p>}
+                                        {errors.password?.type === 'maxLength' && <p className="text-red-500">Password must be less then 20 characters</p>}
+                                        {errors.password?.type === 'pattern' && <p className="text-red-500">Password must contain uppercase, lowercase, numbers, and symbols</p>}
                                     </div>
 
                                     <div>
