@@ -59,7 +59,7 @@ const Header = () => {
                                 </nav>
                             </div>
                             <div>
-                                <button><RxAvatar color="#FFFFFF" size={35} /></button>
+                                <Link to={'login'}><RxAvatar color="#FFFFFF" size={35} /></Link>
                             </div>
 
                             <div className="block md:hidden">
