@@ -1,6 +1,17 @@
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import './loginPage.css'
+import { useEffect, useRef, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const LoginPage = () => {
+
+    const captchaRef = useRef(null);
+    const [btnDisabled, setBtnDisabled] = useState(false)
+
+    useEffect(() => {
+        loadCaptchaEnginge(6);
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -9,6 +20,20 @@ const LoginPage = () => {
         const password = form.password.value;
         console.log(email, password)
     }
+
+    const handleCaptcha = () => {
+        const captchaValue = captchaRef.current.value;
+        console.log(captchaValue)
+        if (validateCaptcha(captchaValue) === true) {
+            setBtnDisabled(true)
+            toast.success('Captcha match')
+        } else {
+            setBtnDisabled(false)
+            toast.error('Captcha faild')
+        }
+    }
+
+
     return (
         <section>
             <div className="login-bg">
@@ -38,14 +63,19 @@ const LoginPage = () => {
                                     <div>
                                         <label className="block text-gray-600 mb-2">Captcha</label>
                                         <div className="flex items-center space-x-4">
-                                            <span className="font-mono text-lg">UAg1uo</span>
-                                            <button type="button" className="text-blue-500 underline">Reload Captcha</button>
+                                            <LoadCanvasTemplate />
+                                            <Toaster />
                                         </div>
-                                        <input type="text" name="captcha" placeholder="Type here" className="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                        <input type="text" ref={captchaRef} name="captcha" placeholder="Type here" className="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                        <div className='border-2 rounded-md text-center mt-2'>
+                                            <button onClick={handleCaptcha} className='w-full'>Validate</button>
+                                        </div>
                                     </div>
 
                                     <div>
-                                        <input type="submit" value={"Sign In"} className="w-full bg-[#D1A054B3] text-white font-bold py-2 rounded-lg hover:bg-[#D1A054BD] focus:outline-none focus:ring-2 focus:ring-yellow-400"/>
+                                        <input
+                                            disabled={btnDisabled === false}
+                                            type="submit" value={"Sign In"} className={`${btnDisabled === false ? 'cursor-not-allowed' : 'cursor-pointer'} w-full bg-[#D1A054B3] text-white font-bold py-2 rounded-lg hover:bg-[#D1A054BD] focus:outline-none focus:ring-2 focus:ring-yellow-400`} />
                                     </div>
 
                                     <div className="text-center mt-6">
