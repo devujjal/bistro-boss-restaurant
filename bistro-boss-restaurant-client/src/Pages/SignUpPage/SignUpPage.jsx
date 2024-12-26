@@ -1,13 +1,14 @@
 import { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import AuthContext from "../../Context/AuthContext";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const SignUpPage = () => {
 
-    const { createNewUser } = useContext(AuthContext);
+    const { createNewUser, updateUserProfile, userLogOut } = useContext(AuthContext);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const navigate = useNavigate();
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{}|;:,.<>?]).{6,20}$/;
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
@@ -17,11 +18,15 @@ const SignUpPage = () => {
         console.log(data)
         try {
             const userCredential = await createNewUser(data?.email, data?.password)
-            if (userCredential.user) {
-                toast.success('Successfully created')
+            if (userCredential?.user) {
+                await updateUserProfile(data?.name, data?.photo);
+                toast.success('Account created. Please log in.'); // Clearer message
                 reset();
-            }
 
+                await userLogOut(); // Log out immediately after creation
+                navigate('/login'); // Redirect to the login page
+
+            }
 
         } catch (error) {
             if (error.code === "auth/email-already-in-use") {
@@ -81,6 +86,11 @@ const SignUpPage = () => {
                                         <label htmlFor="name" className="block text-gray-600 mb-2">Name</label>
                                         <input type="text" {...register("name", { required: true })} id="name" name="name" placeholder="Type here" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
                                         {errors.name && <span className="text-red-500">Name is required</span>}
+                                    </div>
+                                    <div>
+                                        <label htmlFor="photo" className="block text-gray-600 mb-2">Photo URL</label>
+                                        <input type="text" {...register("photo", { required: true })} id="photo" placeholder="Type photo URL" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                        {errors.photo && <span className="text-red-500">Photo URL is required</span>}
                                     </div>
                                     <div>
                                         <label htmlFor="email" className="block text-gray-600 mb-2">Email</label>
