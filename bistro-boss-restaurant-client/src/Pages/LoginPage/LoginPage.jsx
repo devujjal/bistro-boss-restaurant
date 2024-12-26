@@ -1,11 +1,13 @@
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import './loginPage.css'
-import { useEffect, useRef, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { useContext, useEffect, useRef, useState } from 'react';
+import AuthContext from '../../Context/AuthContext';
+import toast from 'react-hot-toast';
 
 
 const LoginPage = () => {
 
+    const { userSignIn } = useContext(AuthContext);
     const captchaRef = useRef(null);
     const [btnDisabled, setBtnDisabled] = useState(false)
 
@@ -13,13 +15,34 @@ const LoginPage = () => {
         loadCaptchaEnginge(6);
     }, [])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password)
+
+        try {
+            const userCredential = await userSignIn(email, password)
+            console.log(userCredential)
+            if (userCredential.user) {
+                toast.success('Successfully Logged in!')
+            }
+        } catch (error) {
+            // Handle specific errors
+            if (error.code === 'auth/user-not-found') {
+                toast.error('User not found.');
+            } else if (error.code === 'auth/too-many-requests') {
+                toast.error('Too many failed attempts. Please try again later.');
+            } else {
+                toast.error('Something went wrong!');
+            }
+        }
     }
+
+
+
+
 
     const handleCaptcha = () => {
         const captchaValue = captchaRef.current.value;
@@ -64,7 +87,6 @@ const LoginPage = () => {
                                         <label className="block text-gray-600 mb-2">Captcha</label>
                                         <div className="flex items-center space-x-4">
                                             <LoadCanvasTemplate />
-                                            <Toaster />
                                         </div>
                                         <input type="text" ref={captchaRef} name="captcha" placeholder="Type here" className="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
                                         <div className='border-2 rounded-md text-center mt-2'>

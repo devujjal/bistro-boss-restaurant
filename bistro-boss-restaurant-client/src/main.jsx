@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router'
 import AppRoutes from './Routes/AppRoutes'
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
+import { Toaster } from 'react-hot-toast'
 
 
 
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <ScrollToTop />
         <AppRoutes />
+        <Toaster />
       </BrowserRouter>
     </HelmetProvider>
   </StrictMode>,
