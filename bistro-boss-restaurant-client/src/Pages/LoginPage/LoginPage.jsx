@@ -3,13 +3,18 @@ import './loginPage.css'
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../Context/AuthContext';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 
 
 const LoginPage = () => {
 
     const { userSignIn } = useContext(AuthContext);
     const [btnDisabled, setBtnDisabled] = useState(false)
+    const location = useLocation();
+    const navigate = useNavigate()
+
+    let from = location.state?.from?.pathname || "/";
+    // location?.state ? location?.state : '/', { replace: true };
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -22,12 +27,13 @@ const LoginPage = () => {
         const password = form.password.value;
         console.log(email, password)
 
-    
+
         try {
             const userCredential = await userSignIn(email, password)
             console.log(userCredential)
             if (userCredential.user) {
                 toast.success('Successfully Logged in!')
+                navigate(from, { replace: true });
             }
         } catch (error) {
             // Handle specific errors

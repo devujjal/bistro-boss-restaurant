@@ -5,7 +5,6 @@ import AuthContext from "../../../../Context/AuthContext";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import { FaSignOutAlt } from "react-icons/fa";
-import auth from "../../../../Firebase/FireBase.config";
 import toast from "react-hot-toast";
 
 
@@ -14,10 +13,10 @@ const Header = () => {
     const { user, userLogOut } = useContext(AuthContext)
     const [toggle, setToggle] = useState(false)
 
-    
+
     const handleLoggedOut = async () => {
         try {
-            await userLogOut(auth);
+            await userLogOut();
             toast.success("Successfully logged out");
         } catch (error) {
             if (error) {
