@@ -104,7 +104,7 @@ const SignUpPage = () => {
                                     </div>
 
                                     <div className="text-center mt-6">
-                                        <Link to={'/login'} href="#" className="text-[#D1A054B3] underline">New here? Create a New Account</Link>
+                                        <Link to={'/login'} href="#" className="text-[#D1A054B3] underline">Already have an Account? Sign in</Link>
                                     </div>
                                 </form>
                                 <div className="mt-6 text-center">

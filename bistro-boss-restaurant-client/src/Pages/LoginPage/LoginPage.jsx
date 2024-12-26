@@ -1,6 +1,6 @@
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import './loginPage.css'
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../Context/AuthContext';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
@@ -9,7 +9,6 @@ import { Link } from 'react-router';
 const LoginPage = () => {
 
     const { userSignIn } = useContext(AuthContext);
-    const captchaRef = useRef(null);
     const [btnDisabled, setBtnDisabled] = useState(false)
 
     useEffect(() => {
@@ -23,6 +22,7 @@ const LoginPage = () => {
         const password = form.password.value;
         console.log(email, password)
 
+    
         try {
             const userCredential = await userSignIn(email, password)
             console.log(userCredential)
@@ -45,8 +45,8 @@ const LoginPage = () => {
 
 
 
-    const handleCaptcha = () => {
-        const captchaValue = captchaRef.current.value;
+    const handleCaptcha = (e) => {
+        const captchaValue = e.target.value;
         console.log(captchaValue)
         if (validateCaptcha(captchaValue) === true) {
             setBtnDisabled(true)
@@ -77,10 +77,10 @@ const LoginPage = () => {
                                     className="space-y-4">
                                     <div>
                                         <label htmlFor="email" className="block text-gray-600 mb-2">Email</label>
-                                        <input type="email" id="email" name="email" placeholder="Type here" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                        <input type="email" required id="email" name="email" placeholder="Type here" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
                                     </div>
                                     <div>
-                                        <label htmlFor="password" className="block text-gray-600 mb-2">Password</label>
+                                        <label htmlFor="password" required className="block text-gray-600 mb-2">Password</label>
                                         <input type="password" id="password" name="password" placeholder="Enter your password" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
                                     </div>
 
@@ -89,10 +89,8 @@ const LoginPage = () => {
                                         <div className="flex items-center space-x-4">
                                             <LoadCanvasTemplate />
                                         </div>
-                                        <input type="text" ref={captchaRef} name="captcha" placeholder="Type here" className="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                                        <div className='border-2 rounded-md text-center mt-2'>
-                                            <button onClick={handleCaptcha} className='w-full'>Validate</button>
-                                        </div>
+                                        <input type="text" onBlur={handleCaptcha} name="captcha" placeholder="Type here" className="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+
                                     </div>
 
                                     <div>

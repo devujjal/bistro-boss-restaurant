@@ -1,13 +1,32 @@
 import { Link, NavLink } from "react-router";
 import { RxAvatar } from "react-icons/rx";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext from "../../../../Context/AuthContext";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
+import { FaSignOutAlt } from "react-icons/fa";
+import auth from "../../../../Firebase/FireBase.config";
+import toast from "react-hot-toast";
 
 
 const Header = () => {
 
+    const { user, userLogOut } = useContext(AuthContext)
     const [toggle, setToggle] = useState(false)
+
+    
+    const handleLoggedOut = async () => {
+        try {
+            await userLogOut(auth);
+            toast.success("Successfully logged out");
+        } catch (error) {
+            if (error) {
+                toast.error("Error logging out. Please try again.");
+            }
+        }
+    };
+
+
 
     return (
         <header>
@@ -59,7 +78,14 @@ const Header = () => {
                                 </nav>
                             </div>
                             <div>
-                                <Link to={'login'}><RxAvatar color="#FFFFFF" size={35} /></Link>
+                                {
+                                    user ? (
+                                        <button onClick={handleLoggedOut}><FaSignOutAlt color="#FFFFFF" size={35} /> </button>
+                                    ) : (
+                                        <Link to={'login'}><RxAvatar color="#FFFFFF" size={35} /></Link>
+                                    )
+                                }
+
                             </div>
 
                             <div className="block md:hidden">
