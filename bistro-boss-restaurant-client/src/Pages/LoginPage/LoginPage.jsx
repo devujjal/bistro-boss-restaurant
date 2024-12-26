@@ -3,6 +3,7 @@ import './loginPage.css'
 import { useContext, useEffect, useRef, useState } from 'react';
 import AuthContext from '../../Context/AuthContext';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router';
 
 
 const LoginPage = () => {
@@ -101,7 +102,7 @@ const LoginPage = () => {
                                     </div>
 
                                     <div className="text-center mt-6">
-                                        <a href="#" className="text-[#D1A054B3] underline">New here? Create a New Account</a>
+                                        <Link to={'/signup'} className="text-[#D1A054B3] underline">New here? Create a New Account</Link>
                                     </div>
                                 </form>
                                 <div className="mt-6 text-center">
