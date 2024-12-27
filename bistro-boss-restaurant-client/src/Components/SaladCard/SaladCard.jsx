@@ -4,11 +4,13 @@ import { useLocation, useNavigate } from "react-router";
 import Swal from 'sweetalert2'
 import useAxiosCommon from '../../Hooks/useAxiosCommon';
 import toast from 'react-hot-toast';
+import useCart from '../../Hooks/useCart';
 
 
 const SaladCard = ({ item, style }) => {
 
     const { user } = useAuth();
+    const [, refetch] = useCart();
     const { name, image, recipe, price } = item;
     const navigate = useNavigate();
     const location = useLocation();
@@ -17,7 +19,7 @@ const SaladCard = ({ item, style }) => {
     const handleAddCart = async (fullItem) => {
         const { name, image, recipe, price } = fullItem;
 
-        if (user && user.email) {
+        if (user && user?.email) {
 
             const newItem = {
                 email: user?.email,
@@ -32,13 +34,14 @@ const SaladCard = ({ item, style }) => {
             try {
                 const response = await axiosSecure.post('/carts', newItem);
                 console.log(response.data);
-                if(response.data.insertedId){
+                if (response.data.insertedId) {
                     toast.success(`${name} is Added`)
+                    refetch()
                 }
             } catch (error) {
                 console.error(error);
-                if(error){
-                    toast.error('Something is Wrong!')
+                if (error) {
+                    toast.error('Something went wrong!')
                 }
             }
 
