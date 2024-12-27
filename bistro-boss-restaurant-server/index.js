@@ -8,6 +8,7 @@ const port = process.env.PORT || 5000;
 //middleware
 
 app.use(cors());
+app.use(express.json())
 
 
 
@@ -75,9 +76,10 @@ async function run() {
                 const itemBody = req.body;
                 const result = await carts.insertOne(itemBody);
                 res.send(result)
+                
             } catch (error) {
-                console.error('Error feching carts data', error);
-                res.status(500).send({ error: "Failed to fetch carts data" })
+                console.error('Error fetching carts:', error);
+                res.status(500).send({ error: 'Failed to fetch carts' });
             }
         })
 

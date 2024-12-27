@@ -3,39 +3,44 @@ import useAuth from '../../Hooks/useAuth';
 import { useLocation, useNavigate } from "react-router";
 import Swal from 'sweetalert2'
 import useAxiosCommon from '../../Hooks/useAxiosCommon';
+import toast from 'react-hot-toast';
+
 
 const SaladCard = ({ item, style }) => {
 
     const { user } = useAuth();
-    const { name, image, recipe, price, _id } = item;
+    const { name, image, recipe, price } = item;
     const navigate = useNavigate();
     const location = useLocation();
+    const axiosSecure = useAxiosCommon();
 
-    const hanldeAddCart = (item) => {
-        if (item && user?.email) {
-            // Code logic
-            const itemID = _id;
-            const email = user?.email;
+    const handleAddCart = async (fullItem) => {
+        const { name, image, recipe, price } = fullItem;
 
-            // Not Recommended for send all of the data to the another collections
+        if (user && user.email) {
+
             const newItem = {
-                itemID,
-                email,
+                email: user?.email,
+                itemId: fullItem._id,
                 name,
                 image,
                 recipe,
                 price
+            };
+
+
+            try {
+                const response = await axiosSecure.post('/carts', newItem);
+                console.log(response.data);
+                if(response.data.insertedId){
+                    toast.success(`${name} is Added`)
+                }
+            } catch (error) {
+                console.error(error);
+                if(error){
+                    toast.error('Something is Wrong!')
+                }
             }
-
-            useAxiosCommon.post('/carts', newItem)
-                .then(res => {
-                    console.log(res.data)
-                })
-                .catch(error => {
-                    console.log(error)
-
-                })
-
 
         } else {
             Swal.fire({
@@ -50,12 +55,13 @@ const SaladCard = ({ item, style }) => {
                 if (result.isConfirmed) {
                     navigate('/login', {
                         state: { from: location }
-                    })
+                    });
                 }
             });
         }
+    };
 
-    }
+
 
 
     return (
@@ -71,7 +77,7 @@ const SaladCard = ({ item, style }) => {
                 <h3 className="text-xl font-bold">{name}</h3>
                 <p className="mt-3 text-sm text-gray-500 leading-relaxed pb-6 grow">{recipe}</p>
                 <button
-                    onClick={() => hanldeAddCart(item)}
+                    onClick={() => handleAddCart(item)}
                     type="button"
                     className="px-5 py-2 uppercase bg-[#E8E8E8] text-base text-[#BB8506] border-[#BB8506] border-b-2 rounded-md transition hover:border-b-0 hover:bg-[#1F2937]">
                     Add to cart
