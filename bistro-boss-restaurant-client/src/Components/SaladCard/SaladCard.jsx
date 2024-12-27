@@ -4,6 +4,12 @@ const SaladCard = ({ item, style }) => {
 
     const { name, image, recipe, price } = item;
 
+
+    const hanldeAddCart = (item) => {
+        console.log(item)
+    }
+
+
     return (
         <div
             className="bg-[#F3F3F3] w-full font-inter max-w-sm overflow-hidden mx-auto mt-4">
@@ -17,6 +23,7 @@ const SaladCard = ({ item, style }) => {
                 <h3 className="text-xl font-bold">{name}</h3>
                 <p className="mt-3 text-sm text-gray-500 leading-relaxed pb-6 grow">{recipe}</p>
                 <button
+                    onClick={() => hanldeAddCart(item)}
                     type="button"
                     className="px-5 py-2 uppercase bg-[#E8E8E8] text-base text-[#BB8506] border-[#BB8506] border-b-2 rounded-md transition hover:border-b-0 hover:bg-[#1F2937]">
                     Add to cart
