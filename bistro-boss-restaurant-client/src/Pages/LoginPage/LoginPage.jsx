@@ -15,6 +15,7 @@ const LoginPage = () => {
 
     let from = location.state?.from?.pathname || "/";
     // location?.state ? location?.state : '/', { replace: true };
+    console.log(location.state?.from?.pathname)
 
     useEffect(() => {
         loadCaptchaEnginge(6);

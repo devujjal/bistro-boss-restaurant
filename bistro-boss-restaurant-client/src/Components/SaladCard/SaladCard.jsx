@@ -1,20 +1,42 @@
 import PropTypes from 'prop-types';
 import useAuth from '../../Hooks/useAuth';
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import Swal from 'sweetalert2'
+import useAxiosCommon from '../../Hooks/useAxiosCommon';
 
 const SaladCard = ({ item, style }) => {
 
     const { user } = useAuth();
-    const { name, image, recipe, price } = item;
+    const { name, image, recipe, price, _id } = item;
     const navigate = useNavigate();
-
+    const location = useLocation();
 
     const hanldeAddCart = (item) => {
         if (item && user?.email) {
             // Code logic
+            const itemID = _id;
+            const email = user?.email;
 
-            
+            // Not Recommended for send all of the data to the another collections
+            const newItem = {
+                itemID,
+                email,
+                name,
+                image,
+                recipe,
+                price
+            }
+
+            useAxiosCommon.post('/carts', newItem)
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(error => {
+                    console.log(error)
+
+                })
+
+
         } else {
             Swal.fire({
                 title: "Are you not logged in?",
@@ -26,7 +48,9 @@ const SaladCard = ({ item, style }) => {
                 confirmButtonText: "Yes, LogIn"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    navigate('/login')
+                    navigate('/login', {
+                        state: { from: location }
+                    })
                 }
             });
         }
