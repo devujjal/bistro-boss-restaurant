@@ -1,17 +1,56 @@
+import Swal from "sweetalert2";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 import useCart from "../../../Hooks/useCart";
+import useAxiosCommon from "../../../Hooks/useAxiosCommon";
+import toast from "react-hot-toast";
 
 const MyCart = () => {
-    const [cart] = useCart();
-    let count = 0
-    console.log(cart)
-
+    const [cart, refetch] = useCart();
+    const axiosSecure = useAxiosCommon();
 
     let totalPrice = cart?.data?.reduce((pre, curr) => {
         return pre + curr.price;
     }, 0);
 
     console.log(totalPrice)
+
+
+    const handleDelete = async (id) => {
+        console.log(id);
+
+        try {
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            });
+
+            if (result.isConfirmed) {
+
+                const response = await axiosSecure.delete(`/carts/${id}`);
+
+                if(response.data.deletedCount > 0){
+                    refetch();
+                    
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your item has been deleted.",
+                        icon: "success"
+                    });
+                }
+
+              
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error('Something went wrong');
+        }
+    };
+
 
 
     return (
@@ -24,12 +63,12 @@ const MyCart = () => {
                         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div className="inline-block bg-white min-w-full py-2 align-middle md:px-6 lg:px-8 lg:py-20">
                                 <div className="flex justify-between items-center font-cinzel mb-6">
-                                    <p className="text-base md:text-xl font-bold"><span>Total orders: 6</span></p>
+                                    <p className="text-base md:text-xl font-bold"><span>Total orders: {cart?.data?.length}</span></p>
                                     <p className="text-base md:text-xl font-bold"><span>total price: ${totalPrice}</span></p>
                                     <button className="px-4 py-2 text-white rounded-xl bg-[#D1A054]">Pay</button>
                                 </div>
-                                <div className="md:rounded-lg">
-                                    <table className="min-w-full overflow-auto font-inter">
+                                <div className="overflow-hidden md:rounded-lg">
+                                    <table className="min-w-full font-inter">
                                         <thead className="bg-[#D1A054]">
                                             <tr>
 
@@ -46,10 +85,10 @@ const MyCart = () => {
                                         <tbody className="bg-white">
 
                                             {
-                                                cart?.data?.map(item => (
+                                                cart?.data?.map((item, index) => (
                                                     <tr key={item._id}>
 
-                                                        <td className="px-4 py-4 text-sm text-[#737373] whitespace-nowrap">{count += 1}</td>
+                                                        <td className="px-4 py-4 text-sm text-[#737373] whitespace-nowrap">{index + 1}</td>
 
                                                         <td className="px-4 py-4 text-sm text-[#737373] whitespace-nowrap"><img src={item?.image} className="w-20 h-18" alt="" /></td>
 
@@ -60,7 +99,10 @@ const MyCart = () => {
 
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             <div className="flex items-center gap-x-6">
-                                                                <button className="text-[#FFFFFF] transition-colors duration-200  
+                                                                <button
+                                                                    onClick={() => handleDelete(item._id)}
+
+                                                                    className="text-[#FFFFFF] transition-colors duration-200  
                                                                 bg-[#B91C1C]
                                                                 p-2 rounded-md
                                                                 hover:text-red-300 focus:outline-none">

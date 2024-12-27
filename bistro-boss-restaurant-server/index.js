@@ -12,7 +12,7 @@ app.use(express.json())
 
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.iam7h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -77,7 +77,7 @@ async function run() {
                 const query = { email: req.query?.email }
                 const result = await carts.find(query).toArray();
                 res.send(result)
-                
+
             } catch (error) {
                 console.error('Error fetching all carts items:', error);
                 res.status(500).send({ error: 'Failed to fetch all carts items' });
@@ -94,6 +94,20 @@ async function run() {
             } catch (error) {
                 console.error('Error fetching carts:', error);
                 res.status(500).send({ error: 'Failed to fetch carts' });
+            }
+        })
+
+
+        //Items delete from database
+        app.delete('/carts/:id', async (req, res) => {
+            try {
+                const id = req.params.id;
+                const query = { _id: new ObjectId(id) };
+                const result = await carts.deleteOne(query);
+                res.send(result)
+            } catch (error) {
+                console.error('Error fetching carts item delete:', error);
+                res.status(500).send({ error: 'Failed to fetch carts item delete' });
             }
         })
 

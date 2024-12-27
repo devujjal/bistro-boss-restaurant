@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router";
 import { RxAvatar } from "react-icons/rx";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../../../../Context/AuthContext";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
@@ -15,10 +15,6 @@ const Header = () => {
     const [toggle, setToggle] = useState(false)
     const [cart] = useCart();
 
-    console.log(cart)
-    useEffect(() => {
-        cart
-    },[cart])
 
     const handleLoggedOut = async () => {
         try {
