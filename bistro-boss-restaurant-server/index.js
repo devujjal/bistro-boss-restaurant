@@ -30,6 +30,7 @@ async function run() {
 
         const database = client.db('BistroDB');
         const menus = database.collection('menu');
+        const carts = database.collection('carts');
 
         app.get('/menu', async (req, res) => {
             const page = parseInt(req.query?.page) || 0;
@@ -66,6 +67,19 @@ async function run() {
                 res.status(500).send({ error: 'Failed to fetch menu counts' });
             }
         });
+
+
+        // Items store to the database
+        app.post('/carts', async (req, res) => {
+            try {
+                const itemBody = req.body;
+                const result = await carts.insertOne(itemBody);
+                res.send(result)
+            } catch (error) {
+                console.error('Error feching carts data', error);
+                res.status(500).send({ error: "Failed to fetch carts data" })
+            }
+        })
 
 
 
