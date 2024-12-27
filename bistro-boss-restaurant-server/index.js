@@ -70,13 +70,24 @@ async function run() {
         });
 
 
+        //Items access from the carts collection
+        app.get('/carts', async (req, res) => {
+            try {
+                const result = await carts.find().toArray();
+                res.send(result)
+            } catch (error) {
+                console.error('Error fetching all carts items:', error);
+                res.status(500).send({ error: 'Failed to fetch all carts items' });
+            }
+        })
+
         // Items store to the database
         app.post('/carts', async (req, res) => {
             try {
                 const itemBody = req.body;
                 const result = await carts.insertOne(itemBody);
                 res.send(result)
-                
+
             } catch (error) {
                 console.error('Error fetching carts:', error);
                 res.status(500).send({ error: 'Failed to fetch carts' });

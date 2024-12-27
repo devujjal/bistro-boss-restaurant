@@ -7,19 +7,27 @@ import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
 import { Toaster } from 'react-hot-toast'
 import AuthProvider from './Providers/AuthProvider'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
+
+const queryClient = new QueryClient()
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
-      <HelmetProvider>
-        <BrowserRouter>
-          <ScrollToTop />
-          <AppRoutes />
-          <Toaster />
-        </BrowserRouter>
-      </HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <HelmetProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <AppRoutes />
+            <Toaster />
+          </BrowserRouter>
+        </HelmetProvider>
+      </QueryClientProvider>
     </AuthProvider>
   </StrictMode>,
 )

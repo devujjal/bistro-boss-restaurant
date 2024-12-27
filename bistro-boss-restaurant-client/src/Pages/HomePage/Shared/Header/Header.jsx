@@ -1,18 +1,24 @@
 import { Link, NavLink } from "react-router";
 import { RxAvatar } from "react-icons/rx";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../../Context/AuthContext";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import { FaSignOutAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
+import useCart from "../../../../Hooks/useCart";
 
 
 const Header = () => {
 
     const { user, userLogOut } = useContext(AuthContext)
     const [toggle, setToggle] = useState(false)
+    const [cart] = useCart();
 
+    console.log(cart)
+    useEffect(() => {
+        cart
+    },[cart])
 
     const handleLoggedOut = async () => {
         try {
@@ -73,7 +79,12 @@ const Header = () => {
                                         }
                                     >Our Shop</NavLink>
 
-                                    <Link className="w-12 block"><img src="https://i.ibb.co.com/Wpm30Qk/151-1511569-cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png" className="w-full" alt="" /></Link>
+                                    <Link className="w-12 block">
+                                        <div className="relative">
+                                            <img src="https://i.ibb.co.com/Wpm30Qk/151-1511569-cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png" className="w-full" alt="" />
+                                            <span className="text-black absolute bottom-0 right-2 ">{cart?.data?.length}</span>
+                                        </div>
+                                    </Link>
                                 </nav>
                             </div>
                             <div>
