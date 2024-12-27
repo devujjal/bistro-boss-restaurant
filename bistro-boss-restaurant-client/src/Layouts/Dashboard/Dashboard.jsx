@@ -7,9 +7,9 @@ const Dashboard = () => {
             <div className="w-64 bg-gray-800 text-white">
                 <AsideBar />
             </div>
-            <div className="flex-1 bg-gray-100 p-4">
+            <main className="flex-1">
                 <Outlet />
-            </div>
+            </main>
         </div>
 
     );

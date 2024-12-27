@@ -79,7 +79,7 @@ const Header = () => {
                                         }
                                     >Our Shop</NavLink>
 
-                                    <Link className="w-12 block">
+                                    <Link to={'/dashboard/my-cart'} className="w-12 block">
                                         <div className="relative">
                                             <img src="https://i.ibb.co.com/Wpm30Qk/151-1511569-cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png" className="w-full" alt="" />
                                             <span className="text-black absolute bottom-0 right-2 ">{cart?.data?.length}</span>
