@@ -5,6 +5,8 @@ import MenuPage from "../Pages/MenuPage/MenuPage/MenuPage";
 import ShopPage from "../Pages/ShopPage/ShopPage";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import SignUpPage from "../Pages/SignUpPage/SignUpPage";
+import Dashboard from "../Layouts/Dashboard/Dashboard";
+import MyCart from "../Pages/DashboardPage/MyCart/MyCart";
 
 const AppRoutes = () => {
     return (
@@ -16,6 +18,10 @@ const AppRoutes = () => {
             </Route>
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
+
+            <Route path="/dashboard" element={<Dashboard />}>
+                <Route path="my-cart" element={<MyCart />} />
+            </Route>
         </Routes>
     )
 };
