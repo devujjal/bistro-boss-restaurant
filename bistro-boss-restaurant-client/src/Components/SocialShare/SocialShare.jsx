@@ -1,23 +1,36 @@
 import { useContext } from "react";
 import AuthContext from "../../Context/AuthContext";
 import toast from "react-hot-toast";
+import usePublicAxios from "../../Hooks/usePublicAxios";
+import { useNavigate } from "react-router";
 
 const SocialShare = () => {
+    const axiosPublic = usePublicAxios();
+    const navigate = useNavigate();
 
     const { signInWithGoogle } = useContext(AuthContext);
 
     const handleSingWithGoogle = async () => {
         try {
             const result = await signInWithGoogle();
-            console.log(result)
-            console.log(result.user)
+            if (result.user) {
+                const res = await axiosPublic.post('/users', {
+                    name: result.user?.displayName,
+                    email: result.user?.email
+                })
+
+                if (res.data) {
+                    navigate('/')
+                }
+
+            }
         } catch (error) {
             if (error) {
                 toast.error('Something went Wrong')
             }
         }
     }
-    
+
 
     return (
         <div className="space-x-6 flex justify-center mt-8">
