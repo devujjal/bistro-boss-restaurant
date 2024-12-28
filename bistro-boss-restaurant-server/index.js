@@ -30,8 +30,23 @@ async function run() {
         await client.connect();
 
         const database = client.db('BistroDB');
+        const users = database.collection('users');
         const menus = database.collection('menu');
         const carts = database.collection('carts');
+
+
+        // User data save in DB
+        app.post('/users', async (req, res) => {
+            try {
+                const body = req.body;
+                const result = await users.insertOne(body);
+                res.send(result)
+            } catch (error) {
+                console.error('Error storing user:', error);
+                res.status(500).send({ error: 'Failed to store users' });
+            }
+        })
+
 
         app.get('/menu', async (req, res) => {
             const page = parseInt(req.query?.page) || 0;

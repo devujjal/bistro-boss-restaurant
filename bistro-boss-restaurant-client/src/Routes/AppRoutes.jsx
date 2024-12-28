@@ -7,6 +7,7 @@ import LoginPage from "../Pages/LoginPage/LoginPage";
 import SignUpPage from "../Pages/SignUpPage/SignUpPage";
 import Dashboard from "../Layouts/Dashboard/Dashboard";
 import MyCart from "../Pages/DashboardPage/MyCart/MyCart";
+import PrivateRoute from "./PrivateRoute";
 
 const AppRoutes = () => {
     return (
@@ -19,7 +20,7 @@ const AppRoutes = () => {
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
 
-            <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
                 <Route path="my-cart" element={<MyCart />} />
             </Route>
         </Routes>

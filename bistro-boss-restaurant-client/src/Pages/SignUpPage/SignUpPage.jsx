@@ -3,39 +3,49 @@ import { Link, useNavigate } from "react-router";
 import AuthContext from "../../Context/AuthContext";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import usePublicAxios from "../../Hooks/usePublicAxios";
 
 const SignUpPage = () => {
 
     const { createNewUser, updateUserProfile, userLogOut } = useContext(AuthContext);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const navigate = useNavigate();
+    const axiosPublic = usePublicAxios();
+
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{}|;:,.<>?]).{6,20}$/;
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
 
     const onSubmit = async (data) => {
-        console.log(data)
         try {
-            const userCredential = await createNewUser(data?.email, data?.password)
+            const userCredential = await createNewUser(data?.email, data?.password);
+
             if (userCredential?.user) {
                 await updateUserProfile(data?.name, data?.photo);
-                toast.success('Account created. Please log in.'); // Clearer message
-                reset();
 
-                await userLogOut(); // Log out immediately after creation
-                navigate('/login'); // Redirect to the login page
+                const response = await axiosPublic.post('/users', {
+                    name: data?.name,
+                    email: data?.email,
+                });
 
+                if (response.data.insertedId) {
+                    reset();
+                    await userLogOut();
+
+                    toast.success('Account created. Please log in.');
+                    navigate('/login');
+                }
             }
-
         } catch (error) {
             if (error.code === "auth/email-already-in-use") {
                 toast.error("Email already in use.");
             } else {
-                toast.error("Something went wrong");
+                toast.error("Something went wrong.");
             }
         }
     };
+
 
 
     // const handleSignUp = async (e) => {
