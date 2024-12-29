@@ -62,6 +62,39 @@ async function run() {
         })
 
 
+        // Users role updated
+        // app.patch('/users/:id', async (req, res) => {
+        //     try {
+        //         const id = req.query.id;
+        //         const filter = { _id: new Object(id) }
+        //         // const updatedDoc = {
+        //         //     $set: {
+        //         //         role: 'admin'
+        //         //     }
+        //         // }
+
+        //     } catch (error) {
+        //         console.error('Error update the user:', error);
+        //         res.status(500).send({ error: 'Failed to update the user' });
+        //     }
+        // })
+
+
+        // Delete the user
+        app.delete('/users/:id', async(req, res) => {
+            try{
+                const id = req.params.id;
+                const query = {_id: new ObjectId(id)};
+                const result = await users.deleteOne(query);
+                res.send(result)
+            } catch(error){
+                console.error('Error delete a user:', error);
+                res.status(500).send({ error: 'Failed to delete a user' });
+            }
+        })
+
+
+
         app.get('/menu', async (req, res) => {
             const page = parseInt(req.query?.page) || 0;
             const size = parseInt(req.query?.size) || 6;

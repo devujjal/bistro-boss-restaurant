@@ -2,13 +2,14 @@ import { useQuery } from '@tanstack/react-query'
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { FaUser } from "react-icons/fa";
-
+import Swal from 'sweetalert2';
+import toast from 'react-hot-toast'
 
 const AllUsers = () => {
 
     const secureAxios = useAxiosSecure();
 
-    const { data: users = [] } = useQuery({
+    const { data: users = [], refetch } = useQuery({
         queryKey: ['allUsers'],
         queryFn: async () => {
             const res = await secureAxios.get('/users')
@@ -16,7 +17,38 @@ const AllUsers = () => {
         }
     })
 
-    console.log(users)
+
+    const handleDeleteUser = async (id) => {
+        try {
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            });
+
+            if (result.isConfirmed) {
+                const response = await secureAxios.delete(`/users/${id}`)
+                console.log(response)
+                if (response.data.deletedCount > 0) {
+                    refetch();
+
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your item has been deleted.",
+                        icon: "success"
+                    });
+                }
+            }
+        } catch (error) {
+            if (error) {
+                toast.error('Something went Wrong')
+            }
+        }
+    }
 
 
 
@@ -30,7 +62,7 @@ const AllUsers = () => {
                         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div className="inline-block bg-white min-w-full py-2 align-middle md:px-6 lg:px-8 lg:py-20">
                                 <div className="flex justify-between items-center font-cinzel mb-6">
-                                    <p className="text-base md:text-xl font-bold"><span>Total Users: 5</span></p>
+                                    <p className="text-base md:text-xl font-bold"><span>Total Users: {users.length}</span></p>
 
                                 </div>
                                 <div className="overflow-hidden md:rounded-lg">
@@ -66,6 +98,7 @@ const AllUsers = () => {
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             <div className="flex items-center gap-x-6">
                                                                 <button
+                                                                    onClick={() => handleDeleteUser(user?._id)}
                                                                     className="text-[#FFFFFF] transition-colors duration-200  
                                                                         bg-[#B91C1C]
                                                                         p-2 rounded-md
