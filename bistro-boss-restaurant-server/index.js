@@ -34,6 +34,13 @@ async function run() {
         const menus = database.collection('menu');
         const carts = database.collection('carts');
 
+        // All users data Access
+        app.get('/users', async (req, res) => {
+            const cursor = users.find();
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+
 
         // User data save in DB
         app.post('/users', async (req, res) => {
@@ -43,7 +50,7 @@ async function run() {
                 const query = { email: body?.email };
                 const isExsit = await users.findOne(query);
                 if (isExsit) {
-                    return res.send({message: 'user already exsit', insertedId: null})
+                    return res.send({ message: 'user already exsit', insertedId: null })
                 }
 
                 const result = await users.insertOne(body);
