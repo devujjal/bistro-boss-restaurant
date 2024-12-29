@@ -8,6 +8,7 @@ import SignUpPage from "../Pages/SignUpPage/SignUpPage";
 import Dashboard from "../Layouts/Dashboard/Dashboard";
 import MyCart from "../Pages/DashboardPage/MyCart/MyCart";
 import PrivateRoute from "./PrivateRoute";
+import AllUsers from "../Pages/AdminDashboardPage/AllUsers/AllUsers";
 
 const AppRoutes = () => {
     return (
@@ -22,6 +23,9 @@ const AppRoutes = () => {
 
             <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
                 <Route path="my-cart" element={<MyCart />} />
+
+                {/* Admin menu */}
+                <Route path="all-users" element={<AllUsers />} />
             </Route>
         </Routes>
     )

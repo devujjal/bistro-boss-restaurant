@@ -8,10 +8,14 @@ import { IoMenu } from "react-icons/io5";
 import { FaShoppingBag } from "react-icons/fa";
 import { CgMail } from "react-icons/cg";
 import { Link, NavLink } from "react-router";
+import AdminMenu from "../../../Components/AdminMenu/AdminMenu";
 
 
 
 const AsideBar = () => {
+
+    const admin = true;
+    
     return (
         <aside
             className="bg-[#D1A054] h-screen fixed top-0 left-0 min-w-[260px] py-6 px-4 font-cinzel flex flex-col overflow-auto">
@@ -32,57 +36,63 @@ const AsideBar = () => {
 
 
             <ul className="space-y-1 mt-6 border-b-2 border-white pb-5">
-                <li>
-                    <NavLink
-                        className="text-black text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
-                        <MdHome size={27} color="#151515" className="mr-2" />
-                        <span className="text-[#151515] font-medium">User Home</span>
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
-                        <PiCalendarCheckFill size={25} color="#151515" className="mr-2" />
+                {
+                    admin ? <>
+                        <AdminMenu />
 
-                        <span className="text-[#151515] font-medium">RESERVAIION</span>
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
-                        <MdPayments size={25} color="#151515" className="mr-2" />
+                    </> : <>
+                        <li>
+                            <NavLink
+                                className="text-black text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
+                                <MdHome size={27} color="#151515" className="mr-2" />
+                                <span className="text-[#151515] font-medium">User Home</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
+                                <PiCalendarCheckFill size={25} color="#151515" className="mr-2" />
 
-                        <span className="text-[#151515] font-medium">PAYMENT HISTORY</span>
+                                <span className="text-[#151515] font-medium">RESERVAIION</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
+                                <MdPayments size={25} color="#151515" className="mr-2" />
 
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to={'/dashboard/my-cart'}
-                        className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
-                        <FaCartArrowDown size={25} color="#151515" className="mr-2" />
+                                <span className="text-[#151515] font-medium">PAYMENT HISTORY</span>
 
-                        <span className="text-[#151515] font-medium">MY CART</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={'/dashboard/my-cart'}
+                                className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
+                                <FaCartArrowDown size={25} color="#151515" className="mr-2" />
 
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
-                        <MdRateReview size={25} color="#151515" className="mr-2" />
+                                <span className="text-[#151515] font-medium">MY CART</span>
 
-                        <span className="text-[#151515] font-medium">ADD REVIEW</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
+                                <MdRateReview size={25} color="#151515" className="mr-2" />
 
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
-                        <MdOutlinePadding size={25} color="#151515" className="mr-2" />
+                                <span className="text-[#151515] font-medium">ADD REVIEW</span>
 
-                        <span className="text-[#151515] font-medium">My Booking</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
+                                <MdOutlinePadding size={25} color="#151515" className="mr-2" />
 
-                    </NavLink>
-                </li>
+                                <span className="text-[#151515] font-medium">My Booking</span>
+
+                            </NavLink>
+                        </li>
+                    </>}
             </ul>
 
 
