@@ -18,6 +18,11 @@ const AllUsers = () => {
     })
 
 
+    const handleMakeAdmin = (id) => {
+        console.log(id)
+    }
+
+
     const handleDeleteUser = async (id) => {
         try {
             const result = await Swal.fire({
@@ -92,7 +97,9 @@ const AllUsers = () => {
 
                                                         <td className="px-4 py-4 text-sm text-[#737373] whitespace-nowrap">{user?.email}</td>
 
-                                                        <td className="px-4 py-4 text-sm text-[#737373] whitespace-nowrap"><button className='p-2 bg-[#D1A054]'><FaUser size={18} color='#FFFFFF' /></button></td>
+                                                        <td className="px-4 py-4 text-sm text-[#737373] whitespace-nowrap"><button
+                                                            onClick={() => handleMakeAdmin(user?._id)}
+                                                            className='p-2 bg-[#D1A054]'><FaUser size={18} color='#FFFFFF' /></button></td>
 
 
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
