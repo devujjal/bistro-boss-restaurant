@@ -72,11 +72,11 @@ async function run() {
                         role: 'admin'
                     }
                 }
-                const reuslt = await users.updateOne(filter, updatedDoc);
+                const result = await users.updateOne(filter, updatedDoc);
                 res.send(result)
             } catch (error) {
                 console.error('Error update the user role:', error);
-                res.status(500).send({ error: 'Failed to update the user role'});
+                res.status(500).send({ error: 'Failed to update the user role' });
             }
         })
 

@@ -18,8 +18,20 @@ const AllUsers = () => {
     })
 
 
-    const handleMakeAdmin = (id) => {
+    const handleMakeAdmin = async (id) => {
         console.log(id)
+        try {
+            const res = await secureAxios.patch(`/users/admin/${id}`)
+            console.log(res.data)
+            if (res.data.modifiedCount > 0) {
+                refetch();
+                toast.success('Successfully Updated Role')
+            }
+        } catch (error) {
+            if (error) {
+                toast.error('Something went Wrong!')
+            }
+        }
     }
 
 
@@ -97,9 +109,13 @@ const AllUsers = () => {
 
                                                         <td className="px-4 py-4 text-sm text-[#737373] whitespace-nowrap">{user?.email}</td>
 
-                                                        <td className="px-4 py-4 text-sm text-[#737373] whitespace-nowrap"><button
-                                                            onClick={() => handleMakeAdmin(user?._id)}
-                                                            className='p-2 bg-[#D1A054]'><FaUser size={18} color='#FFFFFF' /></button></td>
+                                                        <td className="px-4 py-4 text-sm text-[#737373] whitespace-nowrap">
+                                                            {
+                                                                user?.role === "admin" ? "Admin" : <button
+                                                                    onClick={() => handleMakeAdmin(user?._id)}
+                                                                    className='p-2 bg-[#D1A054]'><FaUser size={18} color='#FFFFFF' /></button>
+                                                            }
+                                                        </td>
 
 
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
