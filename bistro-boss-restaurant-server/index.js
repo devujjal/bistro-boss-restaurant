@@ -2,13 +2,16 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
+let cookieParser = require('cookie-parser')
 const port = process.env.PORT || 5000;
 
 
 //middleware
 
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
+app.use(cookieParser())
 
 
 
@@ -33,6 +36,21 @@ async function run() {
         const users = database.collection('users');
         const menus = database.collection('menu');
         const carts = database.collection('carts');
+
+        app.post('/jwt', async (req, res) => {
+            const userEmail = req.body;
+            const token = jwt.sign(userEmail, process.env.ACCESS_TOKEN, { expiresIn: "1d" });
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+                maxAge: 24 * 60 * 60 * 1000,
+                path: '/'
+            })
+
+            res.send({message: true})
+        })
+
 
         // All users data Access
         app.get('/users', async (req, res) => {
