@@ -22,6 +22,42 @@ app.use(cookieParser())
 
 
 
+//VerifyToken with async fuction
+
+/* const verifyJwtAsync = (token, secret) => {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, secret, (err, decoded) => {
+            if (err) {
+                reject(err); // Reject with the error
+            } else {
+                resolve(decoded);
+            }
+        });
+    });
+};
+
+const verifyToken = async (req, res, next) => {
+    try {
+        const token = req.cookies.token;
+
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized Access" }); // Use .json()
+        }
+
+        await verifyJwtAsync(token, process.env.ACCESS_TOKEN); // No need to store decoded if not used later
+
+        next(); // Only call next() if verification is successful
+
+    } catch (err) {
+        console.error("Token Verification Error:", err); // Log the error for debugging
+        return res.status(401).json({ message: "Unauthorized Access" }); // Same message for all errors
+    }
+}; */
+
+
+
+
+
 //JWT Middleware
 const verifyToken = async (req, res, next) => {
     const token = req.cookies.token
@@ -38,6 +74,9 @@ const verifyToken = async (req, res, next) => {
         next();
     })
 }
+
+
+
 
 
 
