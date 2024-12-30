@@ -10,11 +10,13 @@ import { CgMail } from "react-icons/cg";
 import { Link, NavLink } from "react-router";
 import AdminMenu from "../../../Components/AdminMenu/AdminMenu";
 import PropTypes from "prop-types";
+import useAdmin from "../../../Hooks/useAdmin";
 
 
 const AsideBar = ({ setToggle }) => {
 
-    const admin = true;
+    const [isAdmin] = useAdmin();
+
 
     return (
         <aside
@@ -35,7 +37,7 @@ const AsideBar = ({ setToggle }) => {
 
                 <ul className="space-y-1 mt-6 border-b-2 border-white pb-5">
                     {
-                        admin ? <>
+                        isAdmin ? <>
                             <AdminMenu />
 
                         </> : <>

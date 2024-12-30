@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import useAuth from "./useAuth";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
     baseURL: 'http://localhost:5000',
@@ -23,7 +23,6 @@ const useAxiosSecure = () => {
                     await userLogOut();
                     navigate('/login');
                 }
-
 
                 return Promise.reject(error)
             })

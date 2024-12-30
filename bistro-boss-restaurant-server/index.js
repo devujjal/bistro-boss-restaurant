@@ -70,7 +70,7 @@ const verifyToken = async (req, res, next) => {
             return res.status(401).send({ message: "Unauthorized Access" })
         }
 
-        req.user = decoded;
+        req.decoded = decoded;
         next();
     })
 }
@@ -132,10 +132,37 @@ async function run() {
 
         // All users data Access
         app.get('/users', verifyToken, async (req, res) => {
+
             const cursor = users.find();
             const result = await cursor.toArray();
             res.send(result)
         })
+
+
+        // Check if the user role is Admin
+        app.get('/user/admin/:email', verifyToken, async (req, res) => {
+            const email = req.params?.email; // Access email from route params
+            if (email !== req.decoded?.email) {
+                return res.status(403).send({ message: 'Forbidden Access' });
+            }
+        
+            try {
+                const query = { email: email };
+                const user = await users.findOne(query);
+                let admin = false;
+        
+                if (user) {
+                    admin = user?.role === 'admin'; // Check if the user role is 'admin'
+                }
+        
+                res.send({ admin });
+            } catch (error) {
+                console.error('Error verifying admin user role:', error);
+                res.status(500).send({ error: 'Failed to verify admin user role' });
+            }
+        });
+        
+
 
 
         // User data save in DB
