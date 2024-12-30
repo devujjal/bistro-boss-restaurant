@@ -59,7 +59,7 @@ const verifyToken = async (req, res, next) => {
 
 
 //JWT Middleware
-const verifyToken = async (req, res, next) => {
+const verifyToken = (req, res, next) => {
     const token = req.cookies.token
     if (!token) {
         return res.status(401).send({ message: "Unauthorized Access" })
@@ -74,7 +74,6 @@ const verifyToken = async (req, res, next) => {
         next();
     })
 }
-
 
 
 
@@ -130,8 +129,30 @@ async function run() {
         })
 
 
+
+        //VerifyAdmin middleware
+        const verifyAdmin = async (req, res, next) => {
+            try {
+                const email = req.decoded?.email;
+                const query = { email: email };
+                const user = await users.findOne(query);
+                const isAdmin = user?.role === 'admin';
+
+                if (!isAdmin) {
+                    return res.status(401).send({ message: 'Unauthorized Access' });
+                }
+
+                next();
+            } catch (error) {
+                console.error('Error in verifyAdmin middleware:', error);
+                res.status(500).send({ message: 'Internal Server Error' });
+            }
+        };
+
+
+
         // All users data Access
-        app.get('/users', verifyToken, async (req, res) => {
+        app.get('/users', verifyToken, verifyAdmin, async (req, res) => {
 
             const cursor = users.find();
             const result = await cursor.toArray();
@@ -145,23 +166,23 @@ async function run() {
             if (email !== req.decoded?.email) {
                 return res.status(403).send({ message: 'Forbidden Access' });
             }
-        
+
             try {
                 const query = { email: email };
                 const user = await users.findOne(query);
                 let admin = false;
-        
+
                 if (user) {
                     admin = user?.role === 'admin'; // Check if the user role is 'admin'
                 }
-        
+
                 res.send({ admin });
             } catch (error) {
                 console.error('Error verifying admin user role:', error);
                 res.status(500).send({ error: 'Failed to verify admin user role' });
             }
         });
-        
+
 
 
 
@@ -186,7 +207,7 @@ async function run() {
 
 
         // Users role updated
-        app.patch('/users/admin/:id', async (req, res) => {
+        app.patch('/users/admin/:id', verifyToken, verifyAdmin, async (req, res) => {
             try {
                 const id = req.params.id;
                 const filter = { _id: new ObjectId(id) };
@@ -205,7 +226,7 @@ async function run() {
 
 
         // Delete the user
-        app.delete('/users/:id', async (req, res) => {
+        app.delete('/users/:id', verifyToken, async (req, res) => {
             try {
                 const id = req.params.id;
                 const query = { _id: new ObjectId(id) };
