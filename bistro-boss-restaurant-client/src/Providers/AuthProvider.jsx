@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthState
 import auth from '../Firebase/FireBase.config';
 import { useEffect, useState } from 'react';
 import usePublicAxios from '../Hooks/usePublicAxios';
+import toast from 'react-hot-toast';
 
 
 const AuthProvider = ({ children }) => {
@@ -39,28 +40,34 @@ const AuthProvider = ({ children }) => {
         })
     }
 
+
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            const userEmail = currentUser?.email || user?.email;
+
             setUser(currentUser)
             setLoading(false)
 
             try {
-                const email = currentUser?.email;
                 if (currentUser) {
-                    const res = await axiosPublic.post('/jwt', { email });
-                    console.log(res.data)
+                    await axiosPublic.post('/jwt', { email: userEmail });
+                } else {
+                    await axiosPublic.post('/jwt-signout', { email: userEmail });
                 }
             } catch (error) {
-                console.log(error)
+                toast.error(error.message)
             }
-        })
+        });
 
         return () => {
             unSubscribe();
-        }
-    }, [axiosPublic])
+        };
+    }, [axiosPublic, user?.email]);
+
+
 
     console.log(user)
+
 
     const authInfo = {
         userSignIn,

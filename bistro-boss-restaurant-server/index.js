@@ -7,11 +7,37 @@ let cookieParser = require('cookie-parser')
 const port = process.env.PORT || 5000;
 
 
+
+const options = {
+    origin: ['http://localhost:5173'],
+    credentials: true
+}
+
+
 //middleware
 
-app.use(cors());
+app.use(cors(options));
 app.use(express.json());
 app.use(cookieParser())
+
+
+
+//JWT Middleware
+const verifyToken = async (req, res, next) => {
+    const token = req.cookies.token
+    if (!token) {
+        return res.status(401).send({ message: "Unauthorized Access" })
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, decoded) => {
+        if (err) {
+            return res.status(401).send({ message: "Unauthorized Access" })
+        }
+
+        req.user = decoded;
+        next();
+    })
+}
 
 
 
@@ -48,12 +74,25 @@ async function run() {
                 path: '/'
             })
 
-            res.send({message: true})
+            res.send({ message: true })
+        })
+
+
+        app.post('/jwt-signout', async (req, res) => {
+            res.clearCookie('token', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+                maxAge: 0,
+                path: '/'
+            })
+
+            res.send({ message: 'Cookie cleared successfully' })
         })
 
 
         // All users data Access
-        app.get('/users', async (req, res) => {
+        app.get('/users', verifyToken, async (req, res) => {
             const cursor = users.find();
             const result = await cursor.toArray();
             res.send(result)
