@@ -9,6 +9,8 @@ import Dashboard from "../Layouts/Dashboard/Dashboard";
 import MyCart from "../Pages/DashboardPage/MyCart/MyCart";
 import PrivateRoute from "./PrivateRoute";
 import AllUsers from "../Pages/AdminDashboardPage/AllUsers/AllUsers";
+import AddItem from "../Pages/AdminDashboardPage/AddItem/AddItem";
+import AdminRoute from "./AdminRoute";
 
 const AppRoutes = () => {
     return (
@@ -25,7 +27,8 @@ const AppRoutes = () => {
                 <Route path="my-cart" element={<MyCart />} />
 
                 {/* Admin menu */}
-                <Route path="all-users" element={<AllUsers />} />
+                <Route path="add-item" element={<AdminRoute><AddItem /></AdminRoute>} />
+                <Route path="all-users" element={<AdminRoute><AllUsers /></AdminRoute>} />
             </Route>
         </Routes>
     )
