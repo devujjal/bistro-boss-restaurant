@@ -2,13 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 import useAxiosCommon from "../../../Hooks/useAxiosCommon";
 import { FaRegEdit } from "react-icons/fa";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 
 const ManageItems = () => {
 
     const axiosPublicCommon = useAxiosCommon();
+    const axiosSecure = useAxiosSecure();
 
-    const { data = [] } = useQuery({
+    const { data = [], refetch } = useQuery({
         queryKey: ['menu'],
         queryFn: async () => {
             const res = await axiosPublicCommon.get('/menu');
@@ -17,6 +21,34 @@ const ManageItems = () => {
     })
 
     console.log(data)
+
+    const handleDeleteItem = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            try {
+                if (result.isConfirmed) {
+                    const res = await axiosSecure.delete(`/menu/${id}`)
+                    if (res.data.deletedCount > 0) {
+                        refetch();
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your item has been deleted.",
+                            icon: "success"
+                        });
+                    }
+                }
+            } catch (error) {
+                toast.error(error?.message)
+            }
+        });
+    }
 
     return (
         <section className="bg-[#F6F6F6]">
@@ -74,7 +106,7 @@ const ManageItems = () => {
                                                                 </button>
 
                                                                 <button
-
+                                                                    onClick={() => handleDeleteItem(item._id)}
                                                                     className="text-[#FFFFFF] transition-colors duration-200  
                                                                         bg-[#B91C1C]
                                                                         p-2 rounded-md

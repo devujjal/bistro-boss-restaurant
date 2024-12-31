@@ -300,6 +300,20 @@ async function run() {
         })
 
 
+        // item delete
+        app.delete('/menu/:id', async (req, res) => {
+            try {
+                const id = req.params.id;
+                const query = { _id: new ObjectId(id) };
+                const result = await menus.deleteOne(query);
+                res.send(result)
+            } catch (error) {
+                console.error('Error fetching delte item:', error);
+                res.status(500).send({ error: 'Internal Server Error' });
+            }
+        })
+
+
         //Items access from the carts collection
         app.get('/carts', async (req, res) => {
             try {
