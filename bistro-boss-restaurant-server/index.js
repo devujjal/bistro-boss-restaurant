@@ -260,6 +260,19 @@ async function run() {
             }
         });
 
+        //Get Individual Item
+        app.get('/menu/:id', async (req, res) => {
+            try {
+                const id = req.params.id;
+                const query = { _id: new ObjectId(id) }
+                const result = await menus.findOne(query);
+                res.send(result);
+            } catch (error) {
+                console.error('Error fetching individual item:', error);
+                res.status(500).send({ error: 'Internal Server Error' });
+            }
+        })
+
 
         //Total Menu Items Counts
         app.get('/menu-counts', async (req, res) => {

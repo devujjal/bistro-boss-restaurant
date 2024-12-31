@@ -5,6 +5,7 @@ import { FaRegEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { Link } from "react-router";
 
 
 const ManageItems = () => {
@@ -96,14 +97,16 @@ const ManageItems = () => {
 
                                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             <div className="flex items-center gap-x-6">
-                                                                <button
-                                                                    className="text-[#FFFFFF] transition-colors duration-200  
+                                                                <Link to={`/dashboard/update/${item._id}`}>
+                                                                    <button
+                                                                        className="text-[#FFFFFF] transition-colors duration-200  
                                                                         bg-[#D1A054]
                                                                         p-2 rounded-md
                                                                         hover:text-gray-300 focus:outline-none">
-                                                                    <FaRegEdit size={20} />
+                                                                        <FaRegEdit size={20} />
 
-                                                                </button>
+                                                                    </button>
+                                                                </Link>
 
                                                                 <button
                                                                     onClick={() => handleDeleteItem(item._id)}
