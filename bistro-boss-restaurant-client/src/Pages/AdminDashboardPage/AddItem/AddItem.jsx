@@ -1,10 +1,24 @@
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
+import usePublicAxios from "../../../Hooks/usePublicAxios";
+
+const imgbb_Key = import.meta.env.VITE_IMGBB_API;
+const imgbb_API = `https://api.imgbb.com/1/upload?key=${imgbb_Key}`;
 
 const AddItem = () => {
     const { register, handleSubmit } = useForm()
-    const onSubmit = (data) => {
+    const axiosPublic = usePublicAxios();
+
+    const onSubmit = async (data) => {
         console.log(data)
+        const imgFile = { image: data.image[0] }
+        const res = await axiosPublic.post(imgbb_API, imgFile, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        })
+
+        console.log(res.data)
     }
 
     return (
