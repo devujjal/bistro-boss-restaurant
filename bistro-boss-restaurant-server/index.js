@@ -313,6 +313,31 @@ async function run() {
         })
 
 
+        //Update Individual Item
+        app.patch('/menu/:id', verifyToken, verifyAdmin, async (req, res) => {
+            try {
+                const id = req.params.id;
+                const item = req.body;
+                const filter = { _id: new ObjectId(id) };
+                const updatedDoc = {
+                    $set: {
+                        name: item?.name,
+                        recipe: item?.recipe,
+                        image: item?.image,
+                        category: item?.category,
+                        price: item?.price
+                    }
+                };
+                const result = await menus.updateOne(filter, updatedDoc);
+                res.send(result)
+            } catch (error) {
+                console.error('Error fetching updated item:', error);
+                res.status(500).send({ error: 'Internal Server Error' });
+            }
+        })
+
+
+
         // item delete
         app.delete('/menu/:id', async (req, res) => {
             try {
