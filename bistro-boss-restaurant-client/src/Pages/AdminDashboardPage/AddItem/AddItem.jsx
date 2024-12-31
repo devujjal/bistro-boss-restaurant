@@ -1,24 +1,45 @@
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
-import usePublicAxios from "../../../Hooks/usePublicAxios";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import toast from 'react-hot-toast';
+import useAxiosCommon from "../../../Hooks/useAxiosCommon";
+
 
 const imgbb_Key = import.meta.env.VITE_IMGBB_API;
 const imgbb_API = `https://api.imgbb.com/1/upload?key=${imgbb_Key}`;
 
 const AddItem = () => {
-    const { register, handleSubmit } = useForm()
-    const axiosPublic = usePublicAxios();
-
+    const { register, handleSubmit, reset } = useForm()
+    const axiosPublicCommon = useAxiosCommon();
+    const axiosSecure = useAxiosSecure();
     const onSubmit = async (data) => {
-        console.log(data)
-        const imgFile = { image: data.image[0] }
-        const res = await axiosPublic.post(imgbb_API, imgFile, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            }
-        })
+        try {
+            const imgFile = { image: data.image[0] }
+            const res = await axiosPublicCommon.post(imgbb_API, imgFile, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            })
 
-        console.log(res.data)
+            if (res.data.success) {
+                const itemData = {
+                    name: data.name,
+                    recipe: data.recipe,
+                    image: res.data.data.display_url,
+                    category: data.category,
+                    price: parseFloat(data.price)
+                }
+
+                const response = await axiosSecure.post('/menu', itemData)
+                if (response.data.insertedId) {
+                    reset();
+                    toast.success(`${data.name} Added Successfully`)
+                }
+
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
 
     return (

@@ -35,7 +35,7 @@ const AsideBar = ({ setToggle, isAdmin }) => {
 
                 <ul className="space-y-1 mt-6 border-b-2 border-white pb-5">
                     {
-                        isAdmin ? <>
+                        isAdmin === true ? <>
                             <AdminMenu />
 
                         </> : <>
