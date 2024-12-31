@@ -277,7 +277,26 @@ async function run() {
         });
 
 
-        
+        // item added
+        app.post('/menu', verifyToken, verifyAdmin, async (req, res) => {
+            try {
+                const item = req.body;
+                const doc = {
+                    name: item.name,
+                    recipe: item.recipe,
+                    image: item.image,
+                    category: item.category,
+                    price: item.price
+                }
+
+                const result = await menus.insertOne(doc) // we could insert the item variable directly instead of doc;
+                res.send(result)
+
+            } catch (error) {
+                console.error('Error fetching add item:', error);
+                res.status(500).send({ error: 'Internal Server Error' });
+            }
+        })
 
 
         //Items access from the carts collection
