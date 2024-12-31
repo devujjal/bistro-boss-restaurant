@@ -241,15 +241,16 @@ async function run() {
 
 
         app.get('/menu', async (req, res) => {
-            const page = parseInt(req.query?.page) || 0;
-            const size = parseInt(req.query?.size) || 6;
-
-            let query = {};
-            if (req.query.category) {
-                query = { category: req.query.category };
-            }
 
             try {
+                const page = parseInt(req.query?.page);
+                const size = parseInt(req.query?.size);
+
+                let query = {};
+                if (req.query.category) {
+                    query = { category: req.query.category };
+                }
+
                 const cursor = menus.find(query).skip(page * size).limit(size);
                 const result = await cursor.toArray();
                 res.send(result);

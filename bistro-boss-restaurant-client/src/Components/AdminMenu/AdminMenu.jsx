@@ -26,6 +26,7 @@ const AdminMenu = () => {
             </li>
             <li>
                 <NavLink
+                to={'/dashboard/manage-items'}
                     className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
                     <FaListUl size={25} color="#151515" className="mr-2" />
 

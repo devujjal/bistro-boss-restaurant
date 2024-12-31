@@ -11,6 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 import AllUsers from "../Pages/AdminDashboardPage/AllUsers/AllUsers";
 import AddItem from "../Pages/AdminDashboardPage/AddItem/AddItem";
 import AdminRoute from "./AdminRoute";
+import ManageItems from "../Pages/AdminDashboardPage/ManageItems/ManageItems";
 
 const AppRoutes = () => {
     return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
 
                 {/* Admin menu */}
                 <Route path="add-item" element={<AdminRoute><AddItem /></AdminRoute>} />
+                <Route path="manage-items" element={<AdminRoute><ManageItems /></AdminRoute>} />
                 <Route path="all-users" element={<AdminRoute><AllUsers /></AdminRoute>} />
             </Route>
         </Routes>
