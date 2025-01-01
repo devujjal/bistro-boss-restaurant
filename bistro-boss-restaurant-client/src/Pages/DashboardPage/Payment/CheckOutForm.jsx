@@ -3,13 +3,50 @@ import {
     useElements,
     CardElement,
 } from '@stripe/react-stripe-js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import useCart from '../../../Hooks/useCart';
+
 
 
 const CheckOutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState('')
+    const [clientSecretValue, setClientSecretValue] = useState(null);
+    const axiosSecure = useAxiosSecure();
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [cart] = useCart();
+
+    useEffect(() => {
+        const price = cart?.data?.reduce((total, item) => {
+            return total + item.price;
+        }, 0);
+
+        setTotalPrice(price); // Set price once here
+    }, [cart?.data]);
+
+
+
+    useEffect(() => {
+        const payment = async () => {
+            try {
+                if (!isNaN(totalPrice) && totalPrice > 0) {
+                    const res = await axiosSecure.post('/create-payment-intent', { price: totalPrice });
+                    console.log('Client Secret:', res.data.clientSecret);
+                    setClientSecretValue(res.data.clientSecret)
+                }
+            } catch (error) {
+                console.error('Payment Intent Error:', error);
+            }
+        };
+
+        payment();
+    }, [axiosSecure, totalPrice]);
+
+
+
+
 
 
     const handleSubmit = async (event) => {
@@ -62,7 +99,7 @@ const CheckOutForm = () => {
             />
 
             <div className='text-center mt-10'>
-                <button type="submit" className="px-4 py-2 text-white rounded-xl bg-[#D1A054]" disabled={!stripe}>
+                <button type="submit" className="px-4 py-2 text-white rounded-xl bg-[#D1A054]" disabled={!stripe || !clientSecretValue}>
                     Pay
                 </button>
 

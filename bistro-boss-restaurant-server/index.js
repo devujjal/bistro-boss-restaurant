@@ -79,7 +79,6 @@ const verifyToken = (req, res, next) => {
 
 
 
-
 const { MongoClient, ServerApiVersion, ObjectId, ClientSession } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.iam7h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
@@ -395,24 +394,33 @@ async function run() {
         })
 
 
+
+
         // Create a PaymentIntent
         app.post('/create-payment-intent', async (req, res) => {
             try {
-                const { price } = req.body // distracture
-                const totalAmount = parseInt(price * 100);
+                const { price } = req.body;
+
+                console.log(price)
+            
+                const totalAmount = parseFloat(price * 100)
+                console.log(totalAmount)
+
                 const paymentIntent = await stripe.paymentIntents.create({
                     amount: totalAmount,
                     currency: 'usd',
-                    payment_method_types: ['card']
+                    payment_method_types: ['card'],
                 });
-                res.send({
-                    clientSecret: paymentIntent.process.env.PAYMENT_SEC_KEY
-                })
+
+                res.send({ clientSecret: paymentIntent.client_secret });
             } catch (error) {
-                console.error('Error fetching PaymentIntent:', error);
+                console.error('Error creating PaymentIntent:', error);
                 res.status(500).send({ error: 'Internal Server Error' });
             }
-        })
+
+        });
+
+
 
 
 
