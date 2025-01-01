@@ -3,6 +3,8 @@ import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 import useCart from "../../../Hooks/useCart";
 import useAxiosCommon from "../../../Hooks/useAxiosCommon";
 import toast from "react-hot-toast";
+import { Link } from "react-router";
+
 
 const MyCart = () => {
     const [cart, refetch] = useCart();
@@ -33,9 +35,9 @@ const MyCart = () => {
 
                 const response = await axiosSecure.delete(`/carts/${id}`);
 
-                if(response.data.deletedCount > 0){
+                if (response.data.deletedCount > 0) {
                     refetch();
-                    
+
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your item has been deleted.",
@@ -43,7 +45,7 @@ const MyCart = () => {
                     });
                 }
 
-              
+
             }
         } catch (error) {
             console.error(error);
@@ -65,7 +67,13 @@ const MyCart = () => {
                                 <div className="flex justify-between items-center font-cinzel mb-6">
                                     <p className="text-base md:text-xl font-bold"><span>Total orders: {cart?.data?.length}</span></p>
                                     <p className="text-base md:text-xl font-bold"><span>total price: ${totalPrice}</span></p>
-                                    <button className="px-4 py-2 text-white rounded-xl bg-[#D1A054]">Pay</button>
+                                    {
+                                        cart?.data?.length > 0 ? <>
+                                            <Link to={'/dashboard/payment'}><button className="px-4 py-2 text-white rounded-xl bg-[#D1A054]">Pay</button></Link>
+                                        </> : <>
+                                            <button disabled className="px-4 py-2 text-white rounded-xl bg-gray-500">Pay</button>
+                                        </>
+                                    }
                                 </div>
                                 <div className="overflow-hidden md:rounded-lg">
                                     <table className="min-w-full font-inter">
