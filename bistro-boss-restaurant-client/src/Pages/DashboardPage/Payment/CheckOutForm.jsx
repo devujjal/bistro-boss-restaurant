@@ -6,6 +6,7 @@ import {
 import { useEffect, useState } from 'react';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import useCart from '../../../Hooks/useCart';
+import useAuth from '../../../Hooks/useAuth';
 
 
 
@@ -13,10 +14,12 @@ const CheckOutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState('')
-    const [clientSecretValue, setClientSecretValue] = useState(null);
+    const [clientSecretValue, setClientSecretValue] = useState('');
     const axiosSecure = useAxiosSecure();
     const [totalPrice, setTotalPrice] = useState(0);
+    const [transaction, setTransaction] = useState('')
     const [cart] = useCart();
+    const { user } = useAuth()
 
     useEffect(() => {
         const price = cart?.data?.reduce((total, item) => {
@@ -61,6 +64,7 @@ const CheckOutForm = () => {
             return;
         }
 
+        //Create Payment Method
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card
@@ -72,6 +76,29 @@ const CheckOutForm = () => {
         } else {
             console.log('payment mehod: ', paymentMethod)
             setError('')
+        }
+
+
+        // confirmCardPayment
+
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecretValue, {
+            payment_method: {
+                card: card,
+                billing_details: {
+                    name: user?.name || 'anonymous',
+                    email: user?.email || 'anonymous'
+                }
+            }
+        })
+
+        if (confirmError) {
+            console.log('Confirm Payment Error: ', confirmError)
+            setError(confirmError.message)
+        } else {
+            console.log('Confirm Payment: ', paymentIntent);
+            if (paymentIntent.status === 'succeeded') {
+                setTransaction(paymentIntent.id)
+            }
         }
 
     }
@@ -106,6 +133,10 @@ const CheckOutForm = () => {
                 {
                     error ? <p className='text-red-500 text-center font-inter mt-4'><span>{error}</span></p> : ''
 
+                }
+
+                {
+                    transaction ? <p className='text-green-500 text-center font-inter mt-4'>Your transaction id is: {transaction}</p> : ''
                 }
             </div>
         </form>
