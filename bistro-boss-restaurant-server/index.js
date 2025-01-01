@@ -3,6 +3,7 @@ const app = express();
 require('dotenv').config();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const stripe = require('stripe')(process.env.PAYMENT_SEC_KEY)
 let cookieParser = require('cookie-parser')
 const port = process.env.PORT || 5000;
 
@@ -79,7 +80,7 @@ const verifyToken = (req, res, next) => {
 
 
 
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId, ClientSession } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.iam7h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -390,6 +391,26 @@ async function run() {
             } catch (error) {
                 console.error('Error fetching carts item delete:', error);
                 res.status(500).send({ error: 'Failed to fetch carts item delete' });
+            }
+        })
+
+
+        // Create a PaymentIntent
+        app.post('/create-payment-intent', async (req, res) => {
+            try {
+                const { price } = req.body // distracture
+                const totalAmount = parseInt(price * 100);
+                const paymentIntent = await stripe.paymentIntents.create({
+                    amount: totalAmount,
+                    currency: 'usd',
+                    payment_method_types: ['card']
+                });
+                res.send({
+                    clientSecret: paymentIntent.process.env.PAYMENT_SEC_KEY
+                })
+            } catch (error) {
+                console.error('Error fetching PaymentIntent:', error);
+                res.status(500).send({ error: 'Internal Server Error' });
             }
         })
 
