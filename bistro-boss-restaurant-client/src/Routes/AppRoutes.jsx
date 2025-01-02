@@ -14,6 +14,7 @@ import AdminRoute from "./AdminRoute";
 import ManageItems from "../Pages/AdminDashboardPage/ManageItems/ManageItems";
 import UpdatePage from "../Pages/AdminDashboardPage/UpdatePage/UpdatePage";
 import Payment from "../Pages/DashboardPage/Payment/Payment";
+import PaymentHistory from "../Pages/DashboardPage/PaymentHistory/PaymentHistory";
 
 const AppRoutes = () => {
     return (
@@ -29,6 +30,8 @@ const AppRoutes = () => {
             <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
                 <Route path="my-cart" element={<MyCart />} />
                 <Route path="payment" element={<Payment />} />
+                <Route path="payment-history" element={<PaymentHistory />} />
+
 
                 {/* Admin menu */}
                 <Route path="add-item" element={<AdminRoute><AddItem /></AdminRoute>} />

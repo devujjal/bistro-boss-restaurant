@@ -395,6 +395,21 @@ async function run() {
         })
 
 
+        app.get('/payments/:email', verifyToken, async (req, res) => {
+            try {
+                const email = req.params.email;
+                console.log(email)
+                const query = { email: email };
+                const result = await payments.find(query).toArray();
+                res.send(result)
+
+            } catch (error) {
+                console.error('Error fetching all payments by individual payment history:', error);
+                res.status(500).send({ error: 'Internal Server Error' });
+            }
+        })
+
+
         app.post('/payments', async (req, res) => {
             try {
                 const body = req.body;
