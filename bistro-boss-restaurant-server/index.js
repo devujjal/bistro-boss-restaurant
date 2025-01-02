@@ -460,10 +460,22 @@ async function run() {
                 const customers = await users.estimatedDocumentCount();
                 const products = await menus.estimatedDocumentCount();
                 const orders = await payments.estimatedDocumentCount();
+                const revenue = await payments.aggregate([
+                    {
+                        $group: {
+                            _id: null,
+                            totalRevenue : {$sum: '$price'}
+                        }
+                    }
+                ]).toArray();
+
+                const finalRevenue = revenue.length > 0 ? revenue[0].totalRevenue : 0;
+
                 res.send({
                     customers,
                     products,
-                    orders
+                    orders,
+                    finalRevenue
                 })
             } catch (error) {
                 console.error('Error send analytic:', error);
