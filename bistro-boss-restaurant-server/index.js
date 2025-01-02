@@ -454,6 +454,24 @@ async function run() {
         });
 
 
+        // Dashboard Analytic
+        app.get('/analytic', async (req, res) => {
+            try {
+                const customers = await users.estimatedDocumentCount();
+                const products = await menus.estimatedDocumentCount();
+                const orders = await payments.estimatedDocumentCount();
+                res.send({
+                    customers,
+                    products,
+                    orders
+                })
+            } catch (error) {
+                console.error('Error send analytic:', error);
+                res.status(500).send({ error: 'Internal Server Error' });
+            }
+        })
+
+
 
 
 
