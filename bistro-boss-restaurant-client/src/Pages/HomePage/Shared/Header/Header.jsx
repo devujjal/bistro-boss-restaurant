@@ -7,6 +7,7 @@ import { IoMenu } from "react-icons/io5";
 import { FaSignOutAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import useCart from "../../../../Hooks/useCart";
+import useAdmin from "../../../../Hooks/useAdmin";
 
 
 const Header = () => {
@@ -14,6 +15,7 @@ const Header = () => {
     const { user, userLogOut } = useContext(AuthContext)
     const [toggle, setToggle] = useState(false)
     const [cart] = useCart();
+    const [isAdmin] = useAdmin();
 
 
     const handleLoggedOut = async () => {
@@ -54,14 +56,28 @@ const Header = () => {
                                             isActive ? "text-[#EEFF25]" : "text-white"
                                         }>Contact Us</NavLink>
 
-                                    <NavLink
-                                        to={'dashboard/user-home'}
-                                        className={({ isActive }) =>
-                                            isActive ? "text-[#EEFF25]" : "text-white"
-                                        }
-                                    >
-                                        User Dashboard
-                                    </NavLink>
+
+                                    {
+                                        user && isAdmin && <NavLink
+                                            to={'dashboard/admin-home'}
+                                            className={({ isActive }) =>
+                                                isActive ? "text-[#EEFF25]" : "text-white"
+                                            }
+                                        >
+                                            Dashboard
+                                        </NavLink>
+                                    }
+
+                                    {
+                                        user && !isAdmin && <NavLink
+                                            to={'dashboard/user-home'}
+                                            className={({ isActive }) =>
+                                                isActive ? "text-[#EEFF25]" : "text-white"
+                                            }
+                                        >
+                                            Dashboard
+                                        </NavLink>
+                                    }
 
 
                                     <NavLink
