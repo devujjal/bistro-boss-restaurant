@@ -100,6 +100,7 @@ async function run() {
         const users = database.collection('users');
         const menus = database.collection('menu');
         const carts = database.collection('carts');
+        const payments = database.collection('payments');
 
         app.post('/jwt', async (req, res) => {
             const userEmail = req.body;
@@ -394,13 +395,33 @@ async function run() {
         })
 
 
+        app.post('/payments', async (req, res) => {
+            try {
+                const body = req.body;
+
+                const query = {
+                    _id: {
+                        $in: body.cartIds.map(id => new ObjectId(id))
+                    }
+                };
+
+                const result = await payments.insertOne(body);
+
+                const deleteResult = await carts.deleteMany(query);
+
+                res.send({ result, deleteResult });
+            } catch (error) {
+                console.error('Error processing payment:', error);
+                res.status(500).send({ error: 'Internal Server Error' });
+            }
+        });
 
 
         // Create a PaymentIntent
         app.post('/create-payment-intent', async (req, res) => {
             try {
                 const { price } = req.body;
-            
+
                 const totalAmount = parseFloat(price * 100)
 
                 const paymentIntent = await stripe.paymentIntents.create({
