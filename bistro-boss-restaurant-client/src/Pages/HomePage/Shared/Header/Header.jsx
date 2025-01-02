@@ -55,11 +55,14 @@ const Header = () => {
                                         }>Contact Us</NavLink>
 
                                     <NavLink
-                                        to={'desboard'}
+                                        to={'dashboard/user-home'}
                                         className={({ isActive }) =>
                                             isActive ? "text-[#EEFF25]" : "text-white"
                                         }
-                                    >Deshboard</NavLink>
+                                    >
+                                        User Dashboard
+                                    </NavLink>
+
 
                                     <NavLink
                                         to={"/our-menu"}

@@ -10,6 +10,7 @@ const AdminMenu = () => {
         <>
             <li>
                 <NavLink
+                    to={'/dashboard/admin-home'}
                     className="text-black text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
                     <MdHome size={27} color="#151515" className="mr-2" />
                     <span className="text-[#151515] font-medium">Admin Home</span>
@@ -26,7 +27,7 @@ const AdminMenu = () => {
             </li>
             <li>
                 <NavLink
-                to={'/dashboard/manage-items'}
+                    to={'/dashboard/manage-items'}
                     className="text-black hover:text-[#077fbb] text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
                     <FaListUl size={25} color="#151515" className="mr-2" />
 

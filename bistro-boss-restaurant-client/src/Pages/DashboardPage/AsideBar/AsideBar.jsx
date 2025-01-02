@@ -41,6 +41,7 @@ const AsideBar = ({ setToggle, isAdmin }) => {
                         </> : <>
                             <li>
                                 <NavLink
+                                    to={'/dashboard/user-home'}
                                     className="text-black text-sm flex items-center hover:bg-gray-200 rounded px-4 py-3 transition-all cursor-pointer">
                                     <MdHome size={27} color="#151515" className="mr-2" />
                                     <span className="text-[#151515] font-medium">User Home</span>

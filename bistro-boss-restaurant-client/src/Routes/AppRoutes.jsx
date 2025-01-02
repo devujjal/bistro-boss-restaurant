@@ -15,8 +15,11 @@ import ManageItems from "../Pages/AdminDashboardPage/ManageItems/ManageItems";
 import UpdatePage from "../Pages/AdminDashboardPage/UpdatePage/UpdatePage";
 import Payment from "../Pages/DashboardPage/Payment/Payment";
 import PaymentHistory from "../Pages/DashboardPage/PaymentHistory/PaymentHistory";
+import DashBoardHome from "../Pages/DashboardPage/DashBoardHome/DashBoardHome";
+import AdminHome from "../Pages/AdminDashboardPage/AdminHome/AdminHome";
 
 const AppRoutes = () => {
+
     return (
         <Routes>
             <Route path="/" element={<Root />}>
@@ -28,12 +31,16 @@ const AppRoutes = () => {
             <Route path="signup" element={<SignUpPage />} />
 
             <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
+
+                <Route path="user-home" element={<DashBoardHome />} />
                 <Route path="my-cart" element={<MyCart />} />
                 <Route path="payment" element={<Payment />} />
                 <Route path="payment-history" element={<PaymentHistory />} />
 
 
+
                 {/* Admin menu */}
+                <Route path="admin-home" element={<AdminRoute><AdminHome /></AdminRoute>} />
                 <Route path="add-item" element={<AdminRoute><AddItem /></AdminRoute>} />
                 <Route path="manage-items" element={<AdminRoute><ManageItems /></AdminRoute>} />
                 <Route path="update/:id" element={<AdminRoute><UpdatePage /></AdminRoute>} />
