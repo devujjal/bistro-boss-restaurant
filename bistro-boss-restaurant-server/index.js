@@ -468,7 +468,33 @@ async function run() {
                     }
                 ]).toArray();
 
-                res.send({ products, orders, customers, finalRevenue })
+                const chartData = await payments.aggregate([
+                    {
+                        $unwind: '$itemIds'
+                    },
+                    {
+                        $lookup: {
+                            from: 'menu',
+                            localField: 'itemIds',
+                            foreignField: '_id',
+                            as: 'menus'
+                        }
+                    },
+                    {
+                        $unwind: '$menus'
+                    },
+                    {
+                        $group: {
+                            _id: '$menus.category',
+                            quantity: { $sum: 1 },
+                            totalAmount: { $sum: '$menus.price' }
+                        }
+                    }
+                ]).toArray()
+
+
+                res.send({ products, orders, customers, finalRevenue, chartData  })
+                // res.send({ chartData })
 
             } catch (error) {
                 console.error('Error send analytic:', error);

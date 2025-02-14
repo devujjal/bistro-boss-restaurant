@@ -6,6 +6,7 @@ import { FaCarSide } from "react-icons/fa";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import ShapeBarChart from "../../../Components/ShapeBarChart/ShapeBarChart";
 
 
 const AdminHome = () => {
@@ -76,6 +77,9 @@ const AdminHome = () => {
 
 
                     </div>
+                </div>
+                <div>
+                    <ShapeBarChart data={data?.chartData} />
                 </div>
             </div>
         </section>
