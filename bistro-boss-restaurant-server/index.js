@@ -432,27 +432,6 @@ async function run() {
         });
 
 
-        // Create a PaymentIntent
-        app.post('/create-payment-intent', async (req, res) => {
-            try {
-                const { price } = req.body;
-
-                const totalAmount = parseFloat(price * 100)
-
-                const paymentIntent = await stripe.paymentIntents.create({
-                    amount: totalAmount,
-                    currency: 'usd',
-                    payment_method_types: ['card'],
-                });
-
-                res.send({ clientSecret: paymentIntent.client_secret });
-            } catch (error) {
-                console.error('Error creating PaymentIntent:', error);
-                res.status(500).send({ error: 'Internal Server Error' });
-            }
-
-        });
-
 
 
 
@@ -493,7 +472,7 @@ async function run() {
                 ]).toArray()
 
 
-                res.send({ products, orders, customers, finalRevenue, chartData  })
+                res.send({ products, orders, customers, finalRevenue, chartData })
                 // res.send({ chartData })
 
             } catch (error) {
@@ -502,6 +481,77 @@ async function run() {
             }
         })
 
+
+        //user analytic
+        app.get('/user-analytic/:email', async (req, res) => {
+            try {
+                const tokenEmail = req.decoded?.email;
+                const email = req.params.email;
+
+                // if (tokenEmail != email) {
+                //     return res.status(403).send({ message: 'Forbidden Access' })
+                // }
+
+                const query = { email: email };
+                const payment = await payments.aggregate([
+                    {
+                        $match: query
+                    },
+                    {
+                        $group: {
+                            _id: null,
+                            paymentDone: { $sum: 1 }
+                        }
+                    }
+                ]).toArray();
+
+
+                const purchaseOrder = await payments.aggregate([
+                    {
+                        $match: query
+                    },
+                    {
+                        $unwind: '$itemIds'
+                    },
+                    {
+                        $group: {
+                            _id: null,
+                            purchaseOrderDone: { $sum: 1 }
+                        }
+                    }
+                ]).toArray();
+
+                res.send({ payment, purchaseOrder })
+
+            } catch (error) {
+                res.status(500).send({ error: 'Faild to fetch student-analytic data' });
+            }
+        })
+
+
+
+
+
+        // Create a PaymentIntent
+        app.post('/create-payment-intent', async (req, res) => {
+            try {
+                const { price } = req.body;
+
+                const totalAmount = parseFloat(price * 100)
+
+                const paymentIntent = await stripe.paymentIntents.create({
+                    amount: totalAmount,
+                    currency: 'usd',
+                    payment_method_types: ['card'],
+                });
+
+                res.send({ clientSecret: paymentIntent.client_secret });
+            } catch (error) {
+                console.error('Error creating PaymentIntent:', error);
+                res.status(500).send({ error: 'Internal Server Error' });
+            }
+
+        });
 
 
 
