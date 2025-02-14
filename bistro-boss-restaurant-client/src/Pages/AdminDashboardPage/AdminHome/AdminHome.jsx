@@ -7,6 +7,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import ShapeBarChart from "../../../Components/ShapeBarChart/ShapeBarChart";
+import PieChartStatistic from "../../../Components/PieChart/PieChartStatistic";
 
 
 const AdminHome = () => {
@@ -22,6 +23,14 @@ const AdminHome = () => {
         }
     })
 
+
+    const pieChartData = data?.chartData?.map(item => {
+        return { name: item?._id, value: item?.totalAmount }
+    }) || [];
+
+
+    // console.log(pieChartData)
+
     if (isError) {
         return toast.error(error.message)
     }
@@ -36,10 +45,9 @@ const AdminHome = () => {
         )
     }
 
-    console.log(data)
 
     return (
-        <section>
+        <section className="py-10">
             <div className="container mx-auto">
                 <div className="px-6 py-3 md:px-24 md:py-28">
                     <div>
@@ -78,8 +86,13 @@ const AdminHome = () => {
 
                     </div>
                 </div>
-                <div>
-                    <ShapeBarChart data={data?.chartData} />
+                <div className="grid grid-cols-1 xl:grid-cols-2">
+                    <div>
+                        <ShapeBarChart data={data?.chartData} />
+                    </div>
+                    <div>
+                        <PieChartStatistic data={pieChartData} />
+                    </div>
                 </div>
             </div>
         </section>
