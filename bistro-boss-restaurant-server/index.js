@@ -483,14 +483,14 @@ async function run() {
 
 
         //user analytic
-        app.get('/user-analytic/:email', async (req, res) => {
+        app.get('/user-analytic/:email', verifyToken, async (req, res) => {
             try {
                 const tokenEmail = req.decoded?.email;
                 const email = req.params.email;
 
-                // if (tokenEmail != email) {
-                //     return res.status(403).send({ message: 'Forbidden Access' })
-                // }
+                if (tokenEmail != email) {
+                    return res.status(403).send({ message: 'Forbidden Access' })
+                }
 
                 const query = { email: email };
                 const payment = await payments.aggregate([
