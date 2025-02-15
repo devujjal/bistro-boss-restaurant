@@ -20,8 +20,8 @@ const SaladPagination = ({ itemName }) => {
 
     const pages = [...Array(pagesNumber).keys()]
 
-    console.log(itemsCount, pagesNumber)
-    console.log(pages)
+    // console.log(itemsCount, pagesNumber)
+    // console.log(pages)
 
 
 
@@ -37,7 +37,7 @@ const SaladPagination = ({ itemName }) => {
     useEffect(() => {
         axiosSecure.get(`/menu-counts?category=${itemName}`)
             .then(res => {
-                console.log(res.data.result)
+                // console.log(res.data.result)
                 setItemsCount(res.data.result)
             })
     }, [axiosSecure, itemName])
@@ -54,7 +54,7 @@ const SaladPagination = ({ itemName }) => {
         }
     }
 
-    console.log(foodItems)
+    // console.log(foodItems)
 
     return (
         <>

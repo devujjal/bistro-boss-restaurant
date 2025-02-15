@@ -8,6 +8,8 @@ import { FaSignOutAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import useCart from "../../../../Hooks/useCart";
 import useAdmin from "../../../../Hooks/useAdmin";
+import useAxiosCommon from "../../../../Hooks/useAxiosCommon";
+import { useQuery } from "@tanstack/react-query";
 
 
 const Header = () => {
@@ -16,6 +18,18 @@ const Header = () => {
     const [toggle, setToggle] = useState(false)
     const [cart] = useCart();
     const [isAdmin] = useAdmin();
+    // const axiosPublic = useAxiosCommon()
+
+    // const { data: isAdmin = false } = useQuery({
+    //     queryKey: ['admin', user?.email],
+    //     enabled: !!user?.email, // Ensure query only runs if the user exists
+    //     queryFn: async () => {
+    //         const res = await axiosPublic.get(`/user/admin/${user?.email}`);
+    //         return res.data?.admin;
+    //     }
+    // })
+
+
 
 
     const handleLoggedOut = async () => {
@@ -58,18 +72,27 @@ const Header = () => {
 
 
                                     {
-                                        user && isAdmin && <NavLink
+                                        user && isAdmin ? (<NavLink
                                             to={'dashboard/admin-home'}
                                             className={({ isActive }) =>
                                                 isActive ? "text-[#EEFF25]" : "text-white"
                                             }
                                         >
                                             Dashboard
-                                        </NavLink>
+                                        </NavLink>) : (
+                                            <NavLink
+                                                to={'dashboard/user-home'}
+                                                className={({ isActive }) =>
+                                                    isActive ? "text-[#EEFF25]" : "text-white"
+                                                }
+                                            >
+                                                Dashboard
+                                            </NavLink>
+                                        )
                                     }
-
+                                    {/* 
                                     {
-                                        user && !isAdmin && <NavLink
+                                        user && isAdmin === false && <NavLink
                                             to={'dashboard/user-home'}
                                             className={({ isActive }) =>
                                                 isActive ? "text-[#EEFF25]" : "text-white"
@@ -77,7 +100,7 @@ const Header = () => {
                                         >
                                             Dashboard
                                         </NavLink>
-                                    }
+                                    } */}
 
 
                                     <NavLink
